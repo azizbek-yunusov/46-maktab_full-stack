@@ -1,0 +1,97 @@
+::-webkit-scrollbar {
+  width: 16px;
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #b4b4b4;
+  border-radius: 6px;
+  border: 3px solid white;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background-color: #8d8cab;
+  border-radius: 6px;
+  border: 3px solid #2e2d4a;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: #ffb20b;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background-color: #a863fd;
+}
+/* scroll bar  */
+
+
+
+.custom_scroll ::-webkit-scrollbar {
+  display: none;
+  width: 16px;
+  border-radius: 6px;
+}
+.custom_scroll {
+  -ms-overflow-style: none; /* for Internet Explorer, Edge */
+  scrollbar-width: none; /* for Firefox */
+  overflow-x: scroll;
+}
+
+.custom_scroll::-webkit-scrollbar {
+  display: none; /* for Chrome, Safari, and Opera */
+}
+/* Main Features */
+ul.leaders {
+  padding: 0;
+}
+ul.leaders li {
+  display: table;
+}
+ul.leaders li span {
+  display: table-cell;
+}
+ul.leaders li span:first-child {
+  position: relative;
+  overflow: hidden;
+}
+ul.leaders li span:first-child:after {
+  /* DASHES */
+  content: "";
+  position: absolute;
+  bottom: 0.5em;
+  margin-left: 0.5em;
+  width: 100%;
+  border-bottom: 1px dashed #9a9a9a;
+}
+ul.leaders li span + span {
+  text-align: right;
+  width: 1%;
+  vertical-align: bottom;
+  padding-left: 0.5em;
+}
+
+
+/* Snow Theme */
+.app .ql-snow.ql-toolbar {
+  display: block;
+  background: #eaecec;
+  border-top-left-radius: 0.5em;
+  border-top-right-radius: 0.5em;
+}
+
+/* Bubble Theme */
+.app .ql-bubble .ql-editor {
+  border: 1px solid #ccc;
+  border-radius: 0.5em;
+}
+
+.app .ql-editor {
+  min-height: 18em;
+}
+
+.thumbnail-slider-wrap {
+  margin-top: 15px;
+  height: 85px;
+}
+.thumbnail-slider-wrap .slick-track .slick-slide {
+  text-align: center;
+}
+.thumbnail-slider-wrap .slick-track .slick-slide img {
+  width: 70%;
+}
