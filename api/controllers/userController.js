@@ -1,12 +1,11 @@
-const UserModel = require("../models/UserModel");
+const AdminModel = require("../models/AdminModel");
 const cloudinary = require("../utils/cloudinary");
-const ProductModel = require("../models/ProductModel");
 const bcrypt = require("bcryptjs");
 
 // User me
 const getUserInfo = async (req, res) => {
   try {
-    const user = await UserModel.findById(req.user.id);
+    const user = await AdminModel.findById(req.user.id);
     res.status(200).json(user);
   } catch (err) {
     return res.status(500).json({ msg: err.message });
@@ -22,7 +21,7 @@ const updateProfile = async (req, res) => {
       phoneNumber: req.body.phoneNumber,
     };
 
-    const user = await UserModel.findByIdAndUpdate(req.user.id, userData, {
+    const user = await AdminModel.findByIdAndUpdate(req.user.id, userData, {
       new: true,
     });
     res.status(200).json({ msg: "Profile updated", user });
@@ -37,7 +36,7 @@ const changePassword = async (req, res) => {
     if (!oldPassword || !newPassword || !conNewPassword) {
       return res.status(400).json({ error: "Please add all the feilds" });
     }
-    const user = await UserModel.findById(req.user.id);
+    const user = await AdminModel.findById(req.user.id);
 
     const validPassword = await bcrypt.compare(oldPassword, user.password);
     if (!validPassword) return res.status(400).send("Invalid password");
@@ -60,7 +59,7 @@ const uploadAvatar = async (req, res) => {
   try {
     let newUserAvatar = {};
     if (req.body.avatar !== "") {
-      const currentAvatar = await UserModel.findById(req.user.id);
+      const currentAvatar = await AdminModel.findById(req.user.id);
 
       const ImgId = currentAvatar.avatar.public_id;
 
@@ -77,7 +76,7 @@ const uploadAvatar = async (req, res) => {
         url: newAvatar.secure_url,
       };
     }
-    const user = await UserModel.findByIdAndUpdate(req.user.id, newUserAvatar, {
+    const user = await AdminModel.findByIdAndUpdate(req.user.id, newUserAvatar, {
       new: true,
       runValidators: true,
       useFindAndModify: false,
@@ -91,7 +90,7 @@ const uploadAvatar = async (req, res) => {
 // Admin Only
 const getAllUsers = async (req, res) => {
   try {
-    const users = await UserModel.find();
+    const users = await AdminModel.find();
     res.status(200).json(users);
   } catch (err) {
     console.log(err);
@@ -100,7 +99,7 @@ const getAllUsers = async (req, res) => {
 
 const getUser = async (req, res) => {
   try {
-    const user = await UserModel.findById(req.params.id);
+    const user = await AdminModel.findById(req.params.id);
     if (!user) {
       return res.status(404).json({ message: "User Not Found" });
     } else {
@@ -118,7 +117,7 @@ const createUser = async (req, res) => {
     if (!name || !email || !password || !avatar) {
       return res.status(400).json({ error: "Please add all the feilds" });
     }
-    const userExists = await UserModel.findOne({ email });
+    const userExists = await AdminModel.findOne({ email });
     if (userExists) {
       return res.status(400).json({ error: "This email already exists" });
     }
@@ -127,7 +126,7 @@ const createUser = async (req, res) => {
     const result = await cloudinary.uploader.upload(avatar, {
       folder: "Avatar",
     });
-    const user = await UserModel.create({
+    const user = await AdminModel.create({
       name,
       lastName,
       phoneNumber,
@@ -155,8 +154,8 @@ const updateUser = async (req, res) => {
       phoneNumber: req.body.phoneNumber,
       admin: req.body.admin,
     };
-    const user = await UserModel.findByIdAndUpdate(req.body.id);
-    await UserModel.findByIdAndUpdate(user._id, userData, {
+    const user = await AdminModel.findByIdAndUpdate(req.body.id);
+    await AdminModel.findByIdAndUpdate(user._id, userData, {
       new: true,
     });
 
@@ -168,7 +167,7 @@ const updateUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
   try {
-    const user = await UserModel.findByIdAndDelete(req.params.id);
+    const user = await AdminModel.findByIdAndDelete(req.params.id);
     if (!user) {
       res.status(404).json({ message: "User Not Found" });
     }
@@ -183,7 +182,7 @@ const deleteSelected = async (req, res) => {
     let selected = [...req.body.selected];
 
     selected.forEach((id) => {
-      UserModel.deleteOne({ _id: id }, (err) => {
+      AdminModel.deleteOne({ _id: id }, (err) => {
         if (err) {
           console.error(err);
         } else {

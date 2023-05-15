@@ -1,18 +1,18 @@
 export const menu = [
   {
-    name: "about-me",
-    path: "/about",
+    name: "home",
+    path: "/",
   },
   {
     name: "about-me",
     path: "/about",
   },
   {
-    name: "about-me",
+    name: "teachers",
     path: "/about",
   },
   {
-    name: "about-me",
+    name: "students",
     path: "/about",
   },
   {

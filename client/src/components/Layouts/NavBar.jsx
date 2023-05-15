@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const NavBar = () => {
   return (
     <div className="">
-      <nav className="container-full flex_betwen py-5 text-white">
+      <nav className="container-full bg-white flex_betwen text-white">
         <div className="">
           <Logo />
         </div>

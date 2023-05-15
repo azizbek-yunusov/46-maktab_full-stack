@@ -18,8 +18,6 @@ const {
 router.post("/signup", signUp);
 router.post("/verify", verifyOtp);
 router.post("/admin/signin", signInAdmin);
-router.post("/signin", signInClient);
-router.post("/refreshtoken", getAccessToken);
 router.post("/admintoken", getAccessAdminToken);
 router.post("/forgot", forgotPassword);
 router.post("/reset", authMiddleware, resetPassword);

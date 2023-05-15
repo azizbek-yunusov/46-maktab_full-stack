@@ -4,24 +4,9 @@ import { AiOutlineShopping, AiOutlineUser } from "react-icons/ai";
 import { BsFolder } from "react-icons/bs";
 import { MdOutlineAttachMoney } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import { getUsers } from "../../redux/customer";
-import { getOrders } from "../../redux/order";
-import { getProducts } from "../../redux/product";
 
 const TopData = () => {
   let { t } = useTranslation(["home"]);
-
-  const { products } = useSelector((state) => state.product);
-  const { users } = useSelector((state) => state.customer);
-  const { orders } = useSelector((state) => state.order);
-  const dispatch = useDispatch();
-  const { access_token } = useSelector((state) => state.auth);
-
-  useEffect(() => {
-    dispatch(getProducts());
-    dispatch(getUsers(access_token));
-    dispatch(getOrders(access_token));
-  }, [access_token, dispatch]);
   return (
     <div className="w-full xl:px-5 grid grid-cols-4 xl:gap-4 gap-2 md:my-4">
       <div className="flex justify-start items-center bg-white dark:bg-[#2e2d4a] border border-gray-200 dark:border-gray-700  xl:px-6 px-3 xl:py-5 py-3 rounded-lg">

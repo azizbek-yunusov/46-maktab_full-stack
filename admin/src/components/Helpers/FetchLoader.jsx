@@ -3,7 +3,7 @@ import React from "react";
 
 const FetchLoader = ({ isLoading }) => {
   return (
-    <div className="w-full min-h-screen">
+    <div className="fixed top-0 left-0 z-50 w-full min-h-screen">
       <Backdrop
         sx={{
           color: "#fff",

@@ -6,10 +6,10 @@ module.exports = (req, res, next) => {
     const token = req.header("Authorization");
     if (!token) return res.status(401).json({ msg: "Invalid Authentication" });
 
-    jwt.verify(token, JWT_SECRET, (err, user) => {
+    jwt.verify(token, JWT_SECRET, (err, admin) => {
       if (err) return res.status(401).json({ msg: "Invalid Authentication" });
 
-      req.user = user;
+      req.admin = admin;
       next();
     });
   } catch (err) {

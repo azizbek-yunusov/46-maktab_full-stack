@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useGoogleLogin } from "@react-oauth/google";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-import { clearErrors, signIn } from "../redux/actions/authAction";
 import toast from "react-hot-toast";
 import {
   Button,
@@ -17,9 +16,10 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { HelmetTitle } from "../utils";
 import Logo from "../components/Helpers/Logo";
 import { authUrl } from "../utils/baseUrls";
+import { clearErrors, signIn } from "../redux/auth";
 const SignIn = () => {
   const [loader, setLoader] = useState(false);
-  const { isLoading, isLogged, isError, message } = useSelector(
+  const { user, isLogged, isError, message } = useSelector(
     (state) => state.auth
   );
 
@@ -63,8 +63,8 @@ const SignIn = () => {
     // submit form if no errors
     if (Object.keys(errors).length === 0) {
       try {
-        setLoader(true);
-        await dispatch(signIn(formState));
+        // setLoader(true);
+        await dispatch(signIn({ formState }));
       } catch (err) {
         console.log(err);
       }
@@ -239,7 +239,7 @@ const SignIn = () => {
                     <div className="w-full h-[1px] bg-gray-300"></div>
                   </div>
                 </form>
-                <button
+                {/* <button
                   onClick={() => googleOAuthHandle()}
                   className="flex items-center w-full justify-center space-x-2 text-gray-600 my-3 py-3 bg-gray-50 hover:bg-gray-200 rounded-lg border-2 border-gray-300"
                 >
@@ -271,7 +271,7 @@ const SignIn = () => {
                     ></path>
                   </svg>
                   <span>{t("google-in")}</span>
-                </button>{" "}
+                </button>{" "} */}
               </div>
             </div>
           </div>

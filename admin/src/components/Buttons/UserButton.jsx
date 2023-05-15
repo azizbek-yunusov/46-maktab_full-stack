@@ -12,10 +12,10 @@ import {
   Typography,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { signOut } from "../../redux/actions/authAction";
 import { AiOutlineUser } from "react-icons/ai";
 import { FiLogOut } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
+import { signOut } from "../../redux/auth";
 
 // ** Styled Components
 const BadgeContentSpan = styled("span")(({ theme }) => ({
@@ -33,10 +33,10 @@ const UserButton = () => {
   const navigate = useNavigate();
   const signOutHandle = async () => {
     await dispatch(signOut());
-    if (isLogged) {
+    if (!isLogged) {
       navigate("/");
+      toast.success(t("logged-out"));
     }
-    toast.success(t("logged-out"));
   };
   const [anchorEl, setAnchorEl] = useState(null);
   const handleDropdownOpen = (event) => {
@@ -69,7 +69,7 @@ const UserButton = () => {
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
       >
         <Avatar
-          alt={user?.name}
+          alt={user?.first_name}
           onClick={handleDropdownOpen}
           src={
             user?.avatar?.url ||
@@ -88,7 +88,7 @@ const UserButton = () => {
         <Box sx={{ py: 1, px: 1 }}>
           <div className="flex_betwen">
             <img
-              className="h-10 w-10 rounded-full bg-orange-500"
+              className="h-10 w-10 rounded-full bg-purple-500"
               src={user?.avatar?.url}
               alt=""
             />
@@ -101,9 +101,9 @@ const UserButton = () => {
               }}
             >
               <p className="font-semibold text-gray-800">
-                {user?.lastName
-                  ? `${user?.name} ${user?.lastName}`
-                  : user?.name}
+                {user?.last_name
+                  ? `${user?.first_name} ${user?.last_name}`
+                  : user?.first_name}
               </p>
               <Typography
                 variant="body2"

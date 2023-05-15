@@ -1,31 +1,18 @@
-const UserModel = require("../models/UserModel");
+const AdminModel = require("../models/AdminModel");
 const bcrypt = require("bcryptjs");
 const axios = require("axios");
 const jwt = require("jsonwebtoken");
 const { sendMail } = require("../utils/sendEmail");
-const FavoriteProductModel = require("../models/FavoriteProductModel");
-const CartModel = require("../models/CartModel");
 
 const { CLIENT_URL, GOOGLE_OAUTH, GOOGLE_SECRET, JWT_SECRET } = process.env;
 
-function generateOTP() {
-  let otp = "";
-  for (let i = 0; i < 4; i++) {
-    otp += Math.floor(Math.random() * 10);
-  }
-  return otp;
-}
-
 const signUp = async (req, res) => {
   try {
-    const { name, email, password, confirmPass } = req.body;
-    if (!name || !email || !password) {
+    const { first_name, last_name, email, password } = req.body;
+    if (!first_name || !last_name || !email || !password) {
       return res.status(400).json({ error: "Please add all the feilds!!!" });
     }
-    if (password !== confirmPass) {
-      return res.status(400).json({ error: "Passwords do not match" });
-    }
-    const userExists = await UserModel.findOne({ email });
+    const userExists = await AdminModel.findOne({ email });
     if (userExists) {
       return res.status(400).json({ error: "User already exists" });
     }
@@ -33,40 +20,21 @@ const signUp = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    // generation OTP
-    const otp = generateOTP();
-
-    const newUser = await UserModel.create({
-      name,
+    const newUser = await AdminModel.create({
+      first_name,
+      last_name,
       email,
       password: hashedPassword,
-      otp,
-      otp_expiry: new Date(Date.now() + process.env.OTP_EXPIRE * 60 * 1000),
     });
-    await sendMail(
-      email,
-      "Tasdiqlash kodi (OTP)",
-      `Assalomu alaykum,\n\nSizning ro'yhatdan o'tish uchun tasdiqlash kodi (OTP) talab qilindi. Kodingiz quyida keltirilgan:\n\nTasdiqlash kodi: ${otp}\n\nBu kodni saytga kirish uchun foydalaning.\n\nTashakkur,\n\n[Xurmo.uz]`
-    );
 
     await newUser.save();
-
-    const refresh_token = createRefreshToken({ id: newUser._id });
-    const access_token = createAccessToken({ id: newUser._id });
-
-    res.cookie("refreshtoken", refresh_token, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "None",
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-    });
 
     res.status(200).json({
       success: true,
       user: {
         ...newUser._doc,
       },
-      msg: "Enter the verification code (OTP)",
+      msg: "Created",
     });
   } catch (err) {
     return res.status(500).json({ msg: err.message });
@@ -76,7 +44,7 @@ const signUp = async (req, res) => {
 const verifyOtp = async (req, res) => {
   try {
     const { otp } = req.body;
-    const user = await UserModel.findOne({ otp });
+    const user = await AdminModel.findOne({ otp });
     if (!user) {
       return res.status(400).json({ err: "User not found" });
     }
@@ -111,91 +79,13 @@ const verifyOtp = async (req, res) => {
   }
 };
 
-const signInClient = async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    if (!email || !password) {
-      return res.status(400).json({ err: "All fields are required" });
-    }
-    const client = await UserModel.findOne({ email });
-    if (!client) {
-      return res.status(400).json({ err: "Your email is incorrect" });
-    }
-    const isPasswordValid = await bcrypt.compare(password, client.password);
-    if (!isPasswordValid)
-      return res.status(400).json({ err: "Password is incorrect." });
-
-    const refresh_token = createRefreshToken({ id: client._id });
-    const access_token = createAccessToken({ id: client._id });
-
-    const cart = await CartModel.findOne({ user: client._id }).populate(
-      "products.productId",
-      "_id name price images discount inStock numOfReviews ratings"
-    );
-    const favorite = await FavoriteProductModel.findOne({
-      user: client._id,
-    }).populate(
-      "products",
-      "_id name price images discount inStock numOfReviews ratings"
-    );
-    res.status(200).json({
-      msg: "Login success!",
-      access_token,
-      refresh_token,
-      user: {
-        ...client._doc,
-      },
-      cart: cart?.products || [],
-      favorites: favorite?.products || [],
-    });
-  } catch (err) {
-    return res.status(500).json({ msg: err.message });
-  }
-};
-
-const getAccessToken = async (req, res) => {
-  try {
-    const { refresh_token } = req.body;
-    // const refreshToken = await req.cookies.refreshtoken;
-    if (!refresh_token)
-      return res.status(401).json({ msg: "Please login now!" });
-
-    jwt.verify(refresh_token, JWT_SECRET, async (err, client) => {
-      if (err) return res.status(401).json({ msg: "Please login now." });
-
-      const user = await UserModel.findById(client.id).select("-password");
-      if (!user) return res.status(400).json({ msg: "This does not exist." });
-      const access_token = createAccessToken({ id: client.id });
-      const cart = await CartModel.findOne({ user }).populate(
-        "products.productId",
-        "_id name price images discount inStock numOfReviews ratings"
-      );
-      const favorite = await FavoriteProductModel.findOne({
-        user,
-      }).populate(
-        "products",
-        "_id name price images discount inStock numOfReviews ratings"
-      );
-      res.status(200).json({
-        msg: "success!",
-        access_token,
-        user,
-        cart: cart?.products || [],
-        favorites: favorite?.products || [],
-      });
-    });
-  } catch (err) {
-    return res.status(500).json({ msg: err.message });
-  }
-};
-
 const signInAdmin = async (req, res) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
       return res.status(400).json({ err: "All fields are required" });
     }
-    const user = await UserModel.findOne({ email });
+    const user = await AdminModel.findOne({ email });
     if (!user) {
       return res.status(400).json({ err: "Email is incorrect" });
     }
@@ -206,14 +96,7 @@ const signInAdmin = async (req, res) => {
     const refresh_token = createRefreshToken({ id: user._id });
     const access_token = createAccessToken({ id: user._id });
 
-    if (user.admin) {
-      res.cookie("admintoken", refresh_token, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "None",
-        maxAge: 7 * 24 * 60 * 60 * 1000,
-      });
-    } else {
+    if (!user.admin) {
       return res.status(500).json({ msg: "Admin resources access denied" });
     }
 
@@ -240,7 +123,7 @@ const getAccessAdminToken = async (req, res) => {
     jwt.verify(refresh_token, JWT_SECRET, async (err, client) => {
       if (err) return res.status(400).json({ msg: "Please login now." });
 
-      const user = await UserModel.findById(client.id).select("-password");
+      const user = await AdminModel.findById(client.id).select("-password");
 
       if (!user) return res.status(400).json({ msg: "This does not exist." });
       const access_token = createAccessToken({ id: client.id });
@@ -259,7 +142,7 @@ const getAccessAdminToken = async (req, res) => {
 const forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
-    const user = await UserModel.findOne({ email });
+    const user = await AdminModel.findOne({ email });
     if (!user)
       return res.status(400).json({ msg: "This email does not exist." });
 
@@ -279,7 +162,7 @@ const resetPassword = async (req, res) => {
     console.log(password);
     const passwordHash = await bcrypt.hash(password, 12);
 
-    await UserModel.findOneAndUpdate(
+    await AdminModel.findOneAndUpdate(
       { _id: req.user.id },
       {
         password: passwordHash,
@@ -333,7 +216,7 @@ const googleOauth = async (req, res) => {
 
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
-    const user = await UserModel.findOne({ email });
+    const user = await AdminModel.findOne({ email });
     if (user) {
       console.log(user);
       console.log();
@@ -352,7 +235,7 @@ const googleOauth = async (req, res) => {
         },
       });
     } else {
-      const newUser = await UserModel.create({
+      const newUser = await AdminModel.create({
         name,
         lastName,
         email,
@@ -396,12 +279,10 @@ const createRefreshToken = (payload) => {
 
 module.exports = {
   signUp,
-  signInClient,
   signInAdmin,
   signOutAdmin,
   signOutClient,
   googleOauth,
-  getAccessToken,
   forgotPassword,
   resetPassword,
   getAccessAdminToken,

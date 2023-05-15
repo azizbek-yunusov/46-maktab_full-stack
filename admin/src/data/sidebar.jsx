@@ -8,6 +8,7 @@ import {
 } from "react-icons/ai";
 import { BsCardImage, BsCart2, BsUiChecksGrid } from "react-icons/bs";
 import { BiBuildingHouse, BiCategory, BiHomeAlt, BiNews } from "react-icons/bi";
+import { MdWork } from "react-icons/md";
 
 // Admin Sidebar Profile data
 export const sidebarProAdmin = [
@@ -47,57 +48,21 @@ export const sidebarAdmin = [
   },
   {
     id: 2,
-    path: "/dashboard/products",
-    name: "products",
-    icon: <AiOutlineInbox className="md:text-lg ml-4" />,
+    path: "/dashboard/employees",
+    name: "employee",
+    icon: <MdWork className="md:text-lg ml-4" />,
   },
   {
     id: 1,
-    path: "/dashboard/orders",
-    name: "orders",
-    icon: <BsCart2 className="md:text-lg ml-4" />,
-  },
-  {
-    id: 1,
-    path: "/dashboard/users",
-    name: "users",
+    path: "/dashboard/students",
+    name: "students",
     icon: <AiOutlineUser className="md:text-lg ml-4" />,
   },
   {
-    id: 54,
-    path: "/dashboard/reviews",
-    name: "reviews",
-    icon: <AiOutlineComment className="md:text-lg ml-4" />,
-  },
-  {
     id: 3,
-    path: "/dashboard/banners",
-    name: "banners",
+    path: "/dashboard/images",
+    name: "images",
     icon: <BsCardImage className="md:text-lg ml-4" />,
-  },
-  {
-    id: 4,
-    path: "/dashboard/categories",
-    name: "categories",
-    icon: <BiCategory className="md:text-lg ml-4" />,
-  },
-  // {
-  //   id: 5,
-  //   path: "/categories/category/items",
-  //   name: "category-item",
-  //   icon: <BiCategory className="md:text-lg ml-4" />,
-  // },
-  // {
-  //   id: 8,
-  //   path: "/category/item/create",
-  //   name: "category-item-create",
-  //   icon: <BiCategory className="md:text-lg ml-4" />,
-  // },
-  {
-    id: 6,
-    path: "/dashboard/brands",
-    name: "brands",
-    icon: <BiBuildingHouse className="md:text-lg ml-4" />,
   },
 
   {

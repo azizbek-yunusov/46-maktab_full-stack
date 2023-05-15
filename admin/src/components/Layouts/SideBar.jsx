@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { AiOutlineSetting, AiOutlineUser } from "react-icons/ai";
 import { Link, useLocation } from "react-router-dom";
 import { sidebarAdmin } from "../../data/sidebar";
+import LogoAdmin from "../Helpers/LogoAdmin";
 // import Logo from "../../client-components/Helpers/Logo";
 
 const SideBar = () => {
@@ -12,10 +13,8 @@ const SideBar = () => {
     <div className="fixed top-0 left-0 flex flex-col w-14 hover:w-64 md:w-64 h-full text-white transition-all duration-300 border-none z-10 sidebar px-3 overflow-y-scroll custom_scroll">
       <div className="flex flex-col justify-between flex-grow">
         <ul className="flex flex-col py-4 space-y-1 overflow-hidden">
-          <li className="my-4 px-4 text-xl font-bold global-font">
-            <Link to={"/dashboard"}>
-              Logo
-            </Link>
+          <li className="my-4 text-xl font-bold global-font">
+           <LogoAdmin />
           </li>
           <li className="px-5 hidden md:block overflow-hidden">
             <div className="flex flex-row items-center h-8">

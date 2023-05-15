@@ -1,14 +1,13 @@
 import React from "react";
 
-const Logo = ({ className }) => {
+const Logo = () => {
   return (
     <div className="flex items-center">
-      <img
-        src="/images/Xurmo_logo.png"
-        className="h-8 object-cover"
-        alt="logo"
-      />
-      <h1 className={`${className} text-orange-500 md:ml-1 text-3xl font-semibold`}>Xurmo</h1>
+      <img src="/favicons/gerb.png" className="h-28 object-cover" alt="" />
+      <div className="text font-semibold text-zinc-800 uppercase">
+        <h1 className="">Farg'ona viloyati Bag'dod tumani</h1>
+        <h1 className="">46- sonli umumta'lim maktabi </h1>
+      </div>
     </div>
   );
 };
