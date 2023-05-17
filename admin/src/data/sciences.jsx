@@ -1,0 +1,15 @@
+export const sciences = [
+  "ona-tili",
+  "adabiyot",
+  "ingiliz-tili",
+  "rus-tili",
+  "matematika",
+  "informatika",
+  "tarix",
+  "geografiya",
+  "biologiya",
+  "musiqa",
+  "mehnat",
+  "jismoniy-tarbiya",
+  "tasviriy-sanat",
+];

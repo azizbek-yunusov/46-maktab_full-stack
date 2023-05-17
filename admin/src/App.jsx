@@ -16,7 +16,17 @@ import { SignIn } from "./pages";
 import { HomeDashboard } from "./components/Overview";
 import { ImagesList, UploadImage } from "./components/ImagesItems";
 import { refreshToken } from "./redux/auth";
-import { AddEmployee } from "./components/Employee";
+import {
+  AddEmployee,
+  EmployeeList,
+  UpdateEmployee,
+} from "./components/Employee";
+import {
+  CreatePost,
+  PostDetail,
+  PostsList,
+  UpdatePost,
+} from "./components/Post";
 
 function App() {
   const pathname = useLocation().pathname;
@@ -36,9 +46,16 @@ function App() {
         <Route path="/" element={<SignIn />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/dashboard" element={<HomeDashboard />} />,
+        <Route path="/dashboard/employees" element={<EmployeeList />} />,
+        <Route path="/employees/add" element={<AddEmployee />} />,
+        <Route path="/employees/update/:id" element={<UpdateEmployee />} />,
         <Route path="/dashboard/images" element={<ImagesList />} />,
         <Route path="/image/upload" element={<UploadImage />} />,
         <Route path="/employee/add" element={<AddEmployee />} />,
+        <Route path="/dashboard/posts" element={<PostsList />} />,
+        <Route path="/post/create" element={<CreatePost />} />,
+        <Route path="/post/detail/:id" element={<PostDetail />} />,
+        <Route path="/post/update/:id" element={<UpdatePost />} />,
         {/* {auth.isLogged && (
           <>
             

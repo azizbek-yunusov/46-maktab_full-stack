@@ -1,4 +1,4 @@
-import { Button, Tooltip } from "@mui/material";
+import { Button, IconButton, Tooltip } from "@mui/material";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { BiEdit } from "react-icons/bi";
@@ -27,56 +27,35 @@ const GridList = ({
                 className="h-44 w-full rounded-xl object-cover"
                 alt=""
               />
-              <h1 className="text_color text-lg mb-5 mt-3">{t("category")}: {item.category}</h1>
-              {/* <div className="flex justify-end">
-                <Link to={`/images/${item._id}`}>
-                  <Tooltip title="View">
-                    <Button
-                      variant="contained"
-                      size="small"
-                      sx={{
-                        marginRight: "10px",
-                        borderRadius: "6px",
-                        background: "green",
-                      }}
-                      startIcon={<BsEye />}
-                    >
-                      {t("view")}
-                    </Button>
-                  </Tooltip>
-                </Link>
-                <Link to={`/banner/${item._id}`}>
+              <h1 className="text_color text-lg">
+                {t("category")}: {item.category}
+              </h1>
+              <div className="flex justify-end">
+                <Link to={`/image/${item._id}`}>
                   <Tooltip title="Update Item">
-                    <Button
+                    <IconButton
                       fullWidth
                       variant="contained"
                       size="small"
                       sx={{
-                        background: "blue",
-                        borderRadius: "6px",
+                        marginRight: "6px",
                       }}
-                      startIcon={<BiEdit />}
                     >
-                      {t("update")}
-                    </Button>
+                      <BiEdit />
+                    </IconButton>
                   </Tooltip>
                 </Link>
                 <Tooltip title="Delete Item">
-                  <Button
+                  <IconButton
                     onClick={() => handleDeleteImage(item._id)}
                     variant="contained"
                     size="small"
-                    sx={{
-                      marginLeft: "10px",
-                      borderRadius: "6px",
-                      background: "red",
-                    }}
-                    startIcon={<BsTrash />}
+                    color="error"
                   >
-                    {t("delete")}
-                  </Button>
+                    <BsTrash />
+                  </IconButton>
                 </Tooltip>
-              </div> */}
+              </div>
             </div>
           ))
           .reverse()

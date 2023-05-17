@@ -7,7 +7,13 @@ import {
   AiOutlineBarChart,
 } from "react-icons/ai";
 import { BsCardImage, BsCart2, BsUiChecksGrid } from "react-icons/bs";
-import { BiBuildingHouse, BiCategory, BiHomeAlt, BiNews } from "react-icons/bi";
+import {
+  BiBook,
+  BiBuildingHouse,
+  BiCategory,
+  BiHomeAlt,
+  BiNews,
+} from "react-icons/bi";
 import { MdWork } from "react-icons/md";
 
 // Admin Sidebar Profile data
@@ -57,6 +63,12 @@ export const sidebarAdmin = [
     path: "/dashboard/students",
     name: "students",
     icon: <AiOutlineUser className="md:text-lg ml-4" />,
+  },
+  {
+    id: 5,
+    path: "/dashboard/sciences",
+    name: "sciences",
+    icon: <BiBook className="md:text-lg ml-4" />,
   },
   {
     id: 3,

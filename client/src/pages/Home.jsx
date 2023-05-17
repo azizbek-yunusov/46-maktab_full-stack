@@ -15,7 +15,7 @@ const Home = () => {
     }
   }, [dispatch, images]);
   return (
-    <main>
+    <main className="min-h-screen">
       <HelmetTitle title={t("home")} />
       <BannerCarousel />
     </main>

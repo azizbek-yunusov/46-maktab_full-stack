@@ -1,12 +1,12 @@
 const { Schema, model } = require("mongoose");
 
 const employeeSchema = new Schema({
-  first_name: {
+  firstName: {
     type: String,
     required: true,
     trim: true,
   },
-  last_name: {
+  lastName: {
     type: String,
     trim: true,
     required: true,
@@ -15,14 +15,35 @@ const employeeSchema = new Schema({
     type: String,
     required: true,
   },
-  age: {
+  phone: {
     type: String,
     required: true,
   },
-  created_at: {
+  degree: {
+    type: String,
+    required: true,
+  },
+  address: {
+    type: String,
+    required: true,
+  },
+  avatar: {
+    type: String,
+    default:
+      "https://www.iprcenter.gov/image-repository/blank-profile-picture.png/@@images/image.png",
+  },
+  brith: {
+    type: String,
+    required: true,
+  },
+  createdAt: {
     type: Date,
     default: new Date(),
   },
+});
+
+employeeSchema.virtual("fullName").get(function () {
+  return this.firstName + " " + this.lastName;
 });
 
 module.exports = model("Employee", employeeSchema);

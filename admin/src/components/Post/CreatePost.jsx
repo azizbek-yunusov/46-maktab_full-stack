@@ -1,4 +1,11 @@
-import { Button, TextField } from "@mui/material";
+import {
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
 import React, { useState } from "react";
 import { toast } from "react-hot-toast";
 import ReactQuill from "react-quill";
@@ -11,7 +18,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { Layout } from "../Layouts";
 import { HelmetTitle } from "../../utils";
 import { createPost } from "../../redux/post";
-
 
 const modules = {
   toolbar: [
@@ -54,7 +60,7 @@ const CreatePost = () => {
   const { isLoading, isSuccess, isError } = useSelector((state) => state.post);
   const dispatch = useDispatch();
   const [title, setTitle] = useState("");
-  const [slug, setSlug] = useState("");
+  const [category, setCategory] = useState("");
   const [excerpt, setExcerpt] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState([]);
@@ -75,17 +81,11 @@ const CreatePost = () => {
     newArr.splice(index, 1);
     setImage(newArr);
   };
-  const handleTitleSlugChange = async (e) => {
-    let value = e.target.value
-    let slugy = await value.toLowerCase().replace(/\s+/g, "-")
-    setTitle(value)
-    setSlug(slugy)
-  }
   const createBannerHandle = async (e) => {
     e.preventDefault();
     const postData = {
       title,
-      slug,
+      category,
       excerpt,
       content,
       image,
@@ -106,7 +106,7 @@ const CreatePost = () => {
         <section className="relative">
           <div className="bg-gradient-to-r from-cyan-500 to-blue-500 w-full h-40 px-5 pt-4 text-gray-50 rounded-xl">
             <div className="flex_betwen">
-              <h1 className="text-white text-2xl">{t("add-post=title")}</h1>
+              <h1 className="text-white text-2xl">{t("add-post-title")}</h1>
               <ol className="list-reset mt-1 flex text-grey-dark text-sm text-gray-100">
                 <li>
                   <Link to={"/dashboard"}>{"home"}</Link>
@@ -135,19 +135,23 @@ const CreatePost = () => {
                         type="text"
                         className="rounded-xl"
                         value={title}
-                        onChange={handleTitleSlugChange}
+                        onChange={(e) => setTitle(e.target.value)}
                       />
-                      <TextField
-                        id="outlined-basic"
-                        fullWidth
-                        variant="outlined"
-                        label={t("slug")}
-                        placeholder={t("slug-pl")}
-                        type="text"
-                        className="rounded-xl"
-                        value={slug}
-                        onChange={(e) => setSlug(e.target.value)}
-                      />
+                      <FormControl fullWidth>
+                        <InputLabel id="demo-simple-select-label">
+                          {t("select-category")}
+                        </InputLabel>
+                        <Select
+                          labelId="demo-simple-select-label"
+                          id="demo-simple-select"
+                          value={category}
+                          label={t("select-category")}
+                          onChange={(e) => setCategory(e.target.value)}
+                        >
+                          <MenuItem value="news">{t("news")}</MenuItem>
+                          <MenuItem value="about">{t("about")}</MenuItem>
+                        </Select>
+                      </FormControl>
                       <TextField
                         fullWidth
                         multiline
@@ -216,7 +220,7 @@ const CreatePost = () => {
                         </div>
                       </div>
                     </div>
-
+                    <h1 className="mb-3 text-xl">{t("post-desct")}</h1>
                     <ReactQuill
                       theme="snow"
                       value={content}

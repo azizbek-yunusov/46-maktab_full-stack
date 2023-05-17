@@ -12,6 +12,10 @@ const postSchema = new Schema(
     },
     slug: {
       type: String,
+      trim: true,
+    },
+    category: {
+      type: String,
       required: true,
     },
     content: {
@@ -32,17 +36,9 @@ const postSchema = new Schema(
       type: Number,
       default: 0,
     },
-    isShow: {
-      type: Boolean,
-      default: false,
-    },
-    createdAt: {
-      type: Date,
-      default: new Date(),
-    },
     createdBy: {
       type: Schema.Types.ObjectId,
-      ref: "User",
+      ref: "Admin",
     },
   },
   {

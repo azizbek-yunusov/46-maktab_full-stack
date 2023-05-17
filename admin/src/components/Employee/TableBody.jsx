@@ -1,0 +1,176 @@
+import { Checkbox } from "@mui/material";
+import moment from "moment";
+import React from "react";
+import { useTranslation } from "react-i18next";
+import { FiEdit } from "react-icons/fi";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { UserRole, UserStatus } from "../Chips";
+
+const TableBody = ({
+  employees,
+  handleSelectAll,
+  selectedEmployeeIds,
+  filteredEmployees,
+  handleSelectOne,
+  handleDeleteEmployee,
+}) => {
+  let { t } = useTranslation(["user"]);
+  const { user } = useSelector((state) => state.auth);
+  const tableHeadData = [
+    "full-name",
+    "date-of-brith",
+    "degree",
+    "position",
+    "phone",
+    "actions",
+  ];
+  return (
+    <table className="min-w-max w-full table-auto rounded-lg overflow-scroll">
+      <thead>
+        <tr className="bg-gray-100 text-left dark:bg-[#232338] text-gray-500 dark:text-gray-200 text-sm font-light rounded-t-lg uppercase">
+          <th className="py-2 text-center">
+            <Checkbox
+              checked={selectedEmployeeIds.length === employees.length}
+              color="primary"
+              indeterminate={
+                selectedEmployeeIds.length > 0 &&
+                selectedEmployeeIds.length < employees.length
+              }
+              onChange={handleSelectAll}
+            />
+          </th>
+
+          {tableHeadData.map((item, index) => (
+            <th key={index} className="text-left">
+              {t(item)}
+            </th>
+          ))}
+        </tr>
+      </thead>
+      <tbody className="text-gray-600 dark:text-gray-300 text-sm font-light ">
+        {filteredEmployees.length ? (
+          filteredEmployees
+            .map((item, index) => (
+              <tr
+                key={index}
+                className="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-100 font-semibold hover:dark:bg-gray-600"
+              >
+                <td className="py-3 flex_center">
+                  {item._id !== user._id ? (
+                    <Checkbox
+                      checked={selectedEmployeeIds.indexOf(item._id) !== -1}
+                      onChange={(event) => handleSelectOne(event, item._id)}
+                      value="true"
+                    />
+                  ) : (
+                    <Checkbox disabled />
+                  )}
+                </td>
+                <td className="py-3 px-2 xl:px-3 whitespace-nowrap">
+                  <div className="flex justify-start items-center ">
+                    <div className="flex flex-col mr-2">
+                      <Link
+                        to={
+                          user._id !== item._id
+                            ? `/user/${item._id}`
+                            : `/dashboard/cabinet`
+                        }
+                        className="transition_normal hover:text-purple-500"
+                      >
+                        {item.lastName
+                          ? `${item.firstName} ${item.lastName}`
+                          : item.firstName}
+                      </Link>
+                    </div>
+                  </div>
+                </td>
+                <td className="">
+                  <div className="flex justify-start items-center">
+                    {t(item.brith)}
+                  </div>
+                </td>
+                <td className="">
+                  <div className="flex justify-start items-center">
+                    {t(item.degree)}
+                  </div>
+                </td>
+
+                <td className="">
+                  <div className="flex justify-start items-center">
+                   { `${t(item.position)} ${t("teacher")}`}
+                  </div>
+                </td>
+                <td className="">
+                  <div className="flex justify-start items-center">
+                    {"+998 "}
+                    {item.phone}
+                  </div>
+                </td>
+                <td className="">
+                  {user._id !== item._id ? (
+                    <div className="flex item-center justify-start">
+                      <Link
+                        to={`/user/${item._id}`}
+                        className="cursor-pointer w-5 mr-3 transform hover:text-purple-500 hover:scale-110"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                          />
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                          />
+                        </svg>
+                      </Link>
+                      <Link to={`/employees/update/${item._id}`}>
+                        <div className="cursor-pointer w-5 mr-3 transform hover:text-purple-500 hover:scale-110">
+                          <FiEdit className="text-lg" />
+                        </div>
+                      </Link>
+                      <button
+                        onClick={() => handleDeleteEmployee(item._id)}
+                        className="cursor-pointer w-5 mr-3 transform hover:text-purple-500 hover:scale-110"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                  ) : null}
+                </td>
+              </tr>
+            ))
+            .reverse()
+        ) : (
+          <tr className="flex_center p-5">
+            <td className="w-full">no data</td>
+          </tr>
+        )}
+      </tbody>
+    </table>
+  );
+};
+
+export default TableBody;

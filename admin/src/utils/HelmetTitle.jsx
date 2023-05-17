@@ -7,7 +7,7 @@ const HelmetTitle = ({ title }) => {
   
   return (
     <Helmet>
-      <title>{`${title} — ${t("e-commerce")}`}</title>
+      <title>{`${title} — ${t("school")}`}</title>
     </Helmet>
   );
 };

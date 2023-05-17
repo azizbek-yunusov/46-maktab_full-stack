@@ -18,10 +18,10 @@ import { MdDelete } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { deletePost, getPosts } from "../../redux/post";
-import HelmetTitle from "../../utils/HelmetTitle";
 import { MoreMenu, NotData, SearchInput } from "../Helpers";
 import { Layout } from "../Layouts";
 import PostCard from "./PostCard";
+import { HelmetTitle } from "../../utils";
 
 const PostsList = () => {
   let { t } = useTranslation(["dashboard"]);

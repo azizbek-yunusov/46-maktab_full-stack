@@ -45,7 +45,7 @@ const ImagesList = () => {
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
 
-  const filteredImages = images
+  const filteredImages = images;
 
   const handleSelectAll = (event) => {
     let newSelectedImageIds;
@@ -230,46 +230,6 @@ const ImagesList = () => {
                     />
                   </FormControl>
                   <div className="flex items-center">
-                    {isXl ? (
-                      <div className="">
-                        <IconButton
-                          onClick={() => setIsTable(false)}
-                          aria-label="Table"
-                          color={!isTable ? "secondary" : "default"}
-                        >
-                          <BiTable />
-                        </IconButton>
-                        <IconButton
-                          onClick={() => setIsTable(true)}
-                          aria-label="Table"
-                          color={isTable ? "secondary" : "default"}
-                        >
-                          <BsGrid />
-                        </IconButton>
-                      </div>
-                    ) : (
-                      <div className="">
-                        <IconButton
-                          onClick={() => setIsTable(!isTable)}
-                          aria-label="Table"
-                          color="primary"
-                        >
-                          {isTable ? <BiTable /> : <BsGrid />}
-                        </IconButton>
-                      </div>
-                    )}
-
-                    <Button
-                      disabled
-                      variant="outlined"
-                      size="medium"
-                      sx={{
-                        marginLeft: { lg: "10px", xl: "25px" },
-                      }}
-                      startIcon={<BiExport />}
-                    >
-                      {isXl ? "EXPORT" : "EXP"}
-                    </Button>
                     <Link to={"/image/upload"}>
                       <Tooltip title={t("upload-image-title")}>
                         <Button

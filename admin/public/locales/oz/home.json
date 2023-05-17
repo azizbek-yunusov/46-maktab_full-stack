@@ -3,16 +3,8 @@
   "admin-panel": "Admin panel",
   "personal": "Shaxsiy kabinet",
   "overview": "Umumiy",
-  "my-orders": "Buyurtmalarim",
-  "addresses": "Manzillar",
-  "favorites": "Sevimlilar",
+
   "settings": "Sozlamalar",
-  "products": "Mahsulotlar",
-  "reviews": "Sharhlar",
-  "banners": "Bannerlar",
-  "orders": "Buyurtmalar",
-  "brands": "Brendlar",
-  "categories": "Kategoriylar",
   "posts": "Yangiliklar",
   "users": "Foydalanuvchilar",
   "admin": "Administrator",
@@ -21,7 +13,6 @@
   "e-commerce": "Internet do'kon",
   "home-title": "Bosh sahifa",
   "sign-in-t": "ga Xush Kelibsiz",
-  "sign-in-p": "Iltimos, hisobingizga kiring va xaridni boshlang!",
   "sign-in": "Tizimga Kirish",
   "sign-in-b": "Kirish",
   "sign-up-t": "Xaridlar shu yerda boshlanadi ",
@@ -64,5 +55,9 @@
   "app-dowload-descr": "Haridlarni uydan chiqmagan holda mobil ilova orqali amalga oshiring!",
   "page-not-found": "Kecharasiz, ushbu sahifa topilmadi",
   "page-not-found-title": "Kechirasiz, siz qidirayotgan sahifani topa olmadik. Ehtimol, sizda URLni noto'g'ri kiritdingizmi? Imloni tekshirishga ishonch hosil qiling.",
-  "go-to-home": "Bosh sahifaga"
+  "go-to-home": "Bosh sahifaga",
+  "employee": "Xodimlar",
+  "students": "O'quvchilar",
+  "sciences": "Fanlar",
+  "images": "Banner, Galleriya"
 }

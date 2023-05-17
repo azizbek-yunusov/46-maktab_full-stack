@@ -32,8 +32,10 @@ const uploadImage = async (req, res) => {
 
 const deleteImage = async (req, res) => {
   try {
-    const image = await ImageModel.findByIdAndDelete(req.params.id);
-    res.status(201).json({ msg: "Deleted", image });
+    const deletedImage = await ImageModel.findById(req.params.id);
+    await cloudinary.uploader.destroy(deletedImage.image.public_id);
+    await deletedImage.remove();
+    res.status(201).json({ msg: "Deleted", deletedImage });
   } catch (err) {
     console.log(err);
   }

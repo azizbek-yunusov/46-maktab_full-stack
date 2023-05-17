@@ -2,23 +2,23 @@ const PostModel = require("../models/PostModel");
 const cloudinary = require("../utils/cloudinary");
 
 const createPost = async (req, res) => {
-  const { title, excerpt, slug, content, image } = req.body;
+  const { title, category, excerpt, content, image } = req.body;
   try {
     const result = await cloudinary.uploader.upload(image, {
       folder: "Posts",
-      // width: 300,
-      // crop: "scale"
     });
+    let slug = title.toLowerCase().replace(/\s+/g, "-");
     const post = await PostModel.create({
       title,
       excerpt,
       slug,
+      category,
       content,
       image: {
         public_id: result.public_id,
         url: result.secure_url,
       },
-      createdBy: req.user.id,
+      createdBy: req.admin.id,
     });
     await post.save();
     res.status(200).json(post);
@@ -80,6 +80,7 @@ const updatePost = async (req, res) => {
     const { title, excerpt, slug, content, image } = req.body;
     const post = await PostModel.findByIdAndUpdate(req.params.id, {
       title,
+      category,
       excerpt,
       slug,
       content,
@@ -93,7 +94,9 @@ const updatePost = async (req, res) => {
 
 const deletePost = async (req, res) => {
   try {
-    const post = await PostModel.findByIdAndDelete(req.params.id);
+    const post = await PostModel.findById(req.params.id);
+    await cloudinary.uploader.destroy(post.image.public_id);
+    await post.remove();
     res.status(201).json(post);
   } catch (err) {
     console.log(err);
@@ -104,9 +107,6 @@ const deleteSelected = async (req, res) => {
   try {
     let selected = [...req.body.selected];
 
-    // for (let i = 0; i < selected.length; i++) {
-    //   console.log(selected);
-    // }
     await selected.forEach((id) => {
       PostModel.deleteOne({ _id: id }, (err) => {
         if (err) {
