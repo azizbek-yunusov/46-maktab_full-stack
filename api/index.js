@@ -4,7 +4,6 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 require("dotenv").config();
 const bodyParser = require("body-parser");
-const cookieParser = require("cookie-parser");
 
 const routes = require("./routes");
 
@@ -28,7 +27,6 @@ app.use(function (req, res, next) {
 });
 
 // app.set('trust proxy', 1);
-app.use(cookieParser());
 app.use(cors());
 app.use(bodyParser.json({ limit: "100mb" }));
 app.use(

@@ -4,6 +4,7 @@ import auth from "./auth";
 import image from "./imageSlice";
 import employee from "./employee";
 import post from "./post";
+import customer from "./customer";
 import { Provider } from "react-redux";
 
 const store = configureStore({
@@ -11,6 +12,7 @@ const store = configureStore({
     auth,
     image,
     post,
+    customer,
     employee,
   },
   devTools: true,

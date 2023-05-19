@@ -79,7 +79,7 @@ const TableBody = ({
                         className="transition_normal hover:text-purple-500"
                       >
                         {item.lastName
-                          ? `${item.lastName} ${item.firstName}`
+                          ? `${item.firstName} ${item.lastName}`
                           : item.firstName}
                       </Link>
                     </div>

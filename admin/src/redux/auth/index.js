@@ -1,0 +1,288 @@
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
+import { authUrl, token, userUrl } from "../../utils/baseUrls";
+
+export const signUp = createAsyncThunk(
+  "auth/sign-up",
+  async ({ formState }, thunkAPI) => {
+    try {
+      const { data } = await axios.post(`${authUrl}signup`, formState);
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.err);
+    }
+  }
+);
+
+export const verifyOtp = createAsyncThunk(
+  "auth/verify-otp",
+  async ({ otp }, thunkAPI) => {
+    try {
+      const { data } = await axios.post(`${authUrl}verify`, { otp });
+      if (data.admin_token) {
+        localStorage.setItem("admin_token", data.admin_token);
+      }
+      return data;
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error.response.data.err);
+    }
+  }
+);
+
+export const signIn = createAsyncThunk(
+  "auth/admin/sign-in",
+  async ({ formState }, thunkAPI) => {
+    try {
+      const { data } = await axios.post(`${authUrl}admin/signin`, formState);
+      if (data.admin_token) {
+        localStorage.setItem("admin_token", data.admin_token);
+      }
+      console.log(data.admin_token);
+      return data;
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error.response.data.err);
+    }
+  }
+);
+
+export const refreshToken = createAsyncThunk("auth/refresh-token", async () => {
+  try {
+    if (token) {
+      const { data } = await axios.post(`${authUrl}admintoken`, {
+        admin_token: token,
+      });
+
+      return data;
+    }
+  } catch (error) {
+    return console.log(error);
+  }
+});
+
+export const googleOauth = createAsyncThunk(
+  "auth/google-oauth",
+  async ({ access_token }) => {
+    try {
+      const { data } = await axios.post(`${authUrl}google-oauth`, {
+        access_token,
+      });
+
+      if (data.admin_token) {
+        localStorage.setItem("admin_token", data.admin_token);
+      }
+      return data;
+    } catch (error) {
+      return console.log(error);
+    }
+  }
+);
+
+export const editProfile = createAsyncThunk(
+  "auth/edit-profile",
+  async ({ userData, access_token }) => {
+    try {
+      const { data } = await axios.put(`${userUrl}update`, userData, {
+        headers: {
+          Authorization: access_token,
+        },
+      });
+      return data;
+    } catch (error) {
+      return console.log(error);
+    }
+  }
+);
+
+export const uploadAvatar = createAsyncThunk(
+  "auth/upload-avatar",
+  async ({ avatar, access_token }) => {
+    try {
+      const { data } = await axios.put(
+        `${userUrl}avatar`,
+        { avatar },
+        {
+          headers: {
+            Authorization: access_token,
+          },
+        }
+      );
+      return data;
+    } catch (error) {
+      return console.log(error);
+    }
+  }
+);
+
+export const changePassword = createAsyncThunk(
+  "auth/change-password",
+  async ({ passwords, access_token }) => {
+    try {
+      const { data } = await axios.put(`${userUrl}change-password`, passwords, {
+        headers: {
+          Authorization: access_token,
+        },
+      });
+      return data;
+    } catch (error) {
+      return console.log(error);
+    }
+  }
+);
+
+export const signOut = createAsyncThunk("auth/sign-out", async () => {
+  try {
+    localStorage.removeItem("admin_token");
+    return null;
+  } catch (error) {
+    return console.log(error);
+  }
+});
+
+const initialState = {
+  user: null,
+  access_token: "",
+  isLoading: false,
+  isLogged: false,
+  isError: false,
+  isAdmin: false,
+  isLoginShow: false,
+  message: "",
+};
+export const authSlice = createSlice({
+  name: "auth",
+  initialState,
+  reducers: {
+    clearErrors: (state) => {
+      state.isError = false;
+      state.message = "";
+    },
+    toggleLoginModal: (state) => {
+      state.isLoginShow = !state.isLoginShow;
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(signUp.pending, (state) => {})
+      .addCase(signUp.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload.user;
+      })
+      .addCase(signUp.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isLogged = false;
+        state.message = action.payload;
+      })
+      .addCase(verifyOtp.pending, (state) => {})
+      .addCase(verifyOtp.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isLogged = true;
+        state.user = action.payload.user;
+        state.access_token = action.payload.access_token;
+        state.isAdmin = action.payload.user.admin ? true : false;
+      })
+      .addCase(verifyOtp.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isLogged = false;
+        state.message = action.payload;
+      })
+      .addCase(signIn.pending, (state) => {
+        state.isLogged = false;
+      })
+      .addCase(signIn.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isLogged = true;
+        state.user = action.payload.user;
+        state.access_token = action.payload.access_token;
+        state.isAdmin = action.payload.user.admin ? true : false;
+        console.log(action.payload);
+      })
+      .addCase(signIn.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isLogged = false;
+        state.message = action.payload;
+      })
+      .addCase(refreshToken.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(refreshToken.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isLogged = true;
+        state.user = action.payload.user;
+        state.access_token = action.payload.access_token;
+        state.isAdmin = action.payload.user.admin ? true : false;
+      })
+      .addCase(refreshToken.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isLogged = false;
+        state.message = action.payload;
+      })
+      .addCase(googleOauth.pending, (state) => {})
+      .addCase(googleOauth.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isLogged = true;
+        state.user = action.payload.user;
+        state.access_token = action.payload.access_token;
+        state.isAdmin = action.payload.user.admin ? true : false;
+      })
+      .addCase(googleOauth.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isLogged = false;
+        //         state.message = action.payload;
+      })
+      .addCase(editProfile.pending, (state) => {})
+      .addCase(editProfile.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isLogged = true;
+        state.user = action.payload.user;
+      })
+      .addCase(editProfile.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isLogged = false;
+        //         state.message = action.payload;
+      })
+      .addCase(uploadAvatar.pending, (state) => {})
+      .addCase(uploadAvatar.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isLogged = true;
+        state.user = action.payload.user;
+      })
+      .addCase(uploadAvatar.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isLogged = false;
+        //         state.message = action.payload;
+      })
+      .addCase(signOut.pending, (state) => {})
+      .addCase(signOut.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isLogged = false;
+        state.user = null;
+        state.access_token = "";
+        state.isAdmin = false;
+      })
+      .addCase(signOut.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isLogged = false;
+        state.message = action.payload;
+      })
+      .addCase(() => {});
+  },
+});
+export const { toggleLoginModal, clearErrors } = authSlice.actions;
+
+export default authSlice.reducer;

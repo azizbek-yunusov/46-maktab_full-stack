@@ -1,20 +1,18 @@
 import {
-  AiOutlineInbox,
-  AiOutlineComment,
   AiOutlineSetting,
   AiOutlineTeam,
   AiOutlineUser,
   AiOutlineBarChart,
 } from "react-icons/ai";
-import { BsCardImage, BsCart2, BsUiChecksGrid } from "react-icons/bs";
+import { BsCardImage, BsUiChecksGrid } from "react-icons/bs";
 import {
-  BiBook,
-  BiBuildingHouse,
-  BiCategory,
   BiHomeAlt,
   BiNews,
 } from "react-icons/bi";
-import { MdWork } from "react-icons/md";
+import {
+  HiUserGroup
+} from "react-icons/hi";
+import { MdWork, MdAdminPanelSettings } from "react-icons/md";
 
 // Admin Sidebar Profile data
 export const sidebarProAdmin = [
@@ -62,13 +60,13 @@ export const sidebarAdmin = [
     id: 1,
     path: "/dashboard/students",
     name: "students",
-    icon: <AiOutlineUser className="md:text-lg ml-4" />,
+    icon: <HiUserGroup className="md:text-lg ml-4" />,
   },
   {
     id: 5,
-    path: "/dashboard/sciences",
-    name: "sciences",
-    icon: <BiBook className="md:text-lg ml-4" />,
+    path: "/dashboard/admins",
+    name: "admins",
+    icon: <MdAdminPanelSettings className="md:text-lg ml-4" />,
   },
   {
     id: 3,
