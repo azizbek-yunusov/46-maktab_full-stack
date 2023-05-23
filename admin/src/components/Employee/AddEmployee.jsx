@@ -49,7 +49,9 @@ const AddEmployee = () => {
         degree,
         brith,
         position,
-        address: `${region}, ${district}, ${street}`,
+        region,
+        district,
+        address: street,
       };
       dispatch(addEmployee({ employeeData, access_token }));
       console.log(employeeData);
@@ -117,7 +119,7 @@ const AddEmployee = () => {
             <div className="flex w-full p-8 px-8 xl:px-16">
               <div className="w-full">
                 <form onSubmit={addEmployeeHandle}>
-                <h1 className="my-6 text-xl">{t("employee-info")}</h1>
+                  <h1 className="my-6 text-xl">{t("employee-info")}</h1>
                   <div className="grid grid-cols-2 gap-5">
                     <TextField
                       required
@@ -175,6 +177,18 @@ const AddEmployee = () => {
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                     />
+                    <div className="block border border-gray-300 rounded-lg ">
+                      <p className="-mt-[10px] bg-white w-24 ml-2 text-gray-600 text-sm">
+                        {t("date-of-brith")}
+                      </p>
+                      <input
+                        type="date"
+                        className="mt-1 ml-5"
+                        value={brith}
+                        required
+                        onChange={handleDateChange}
+                      />
+                    </div>
                   </div>
                   <h1 className="my-6 text-xl">{t("residential-address")}</h1>
                   <div className=" grid md:grid-cols-2 grid-cols-1 gap-5">
@@ -225,19 +239,12 @@ const AddEmployee = () => {
                       required
                       variant="outlined"
                       type="text"
-                      className="rounded-xl"
+                      className="rounded-xl col-span-2"
                       value={street}
                       onChange={(e) => setStreet(e.target.value)}
                       label={t("street")}
                     />
-                    <div className="block">
-                      <label>{t("date-of-brith")}</label>
-                      <input
-                        type="date"
-                        value={brith}
-                        onChange={handleDateChange}
-                      />
-                    </div>
+                    
                   </div>
                   <div className="w-full mt-10 flex justify-end">
                     <Button

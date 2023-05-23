@@ -2,7 +2,6 @@ import React from "react";
 import Logo from "../Helpers/Logo";
 import { menu } from "../../data/list";
 import { Link } from "react-router-dom";
-import { IconButton } from "@mui/material";
 import { FiSearch } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
 
@@ -22,9 +21,9 @@ const NavBar = () => {
               </li>
             ))}
           </ul>
-          <IconButton>
+          {/* <IconButton>
             <FiSearch />
-          </IconButton>
+          </IconButton> */}
         </div>
       </nav>
     </div>

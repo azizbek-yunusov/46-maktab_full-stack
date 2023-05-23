@@ -96,14 +96,6 @@ const UpdateEmployee = () => {
     if (access_token) {
       dispatch(getEmployee({ id, access_token }));
     }
-    if (employee) {
-      setDegree(employee.degree);
-      setFirstName(employee.firstName);
-      setLastName(employee.lastName);
-      setPosition(employee.position);
-      setBrith(employee.brith);
-      setPhone(employee.phone);
-    }
   }, [dispatch, access_token, id]);
   useEffect(() => {
     if (employee) {

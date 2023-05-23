@@ -28,7 +28,7 @@ import {
   UpdatePost,
 } from "./components/Post";
 import { CreateUser, UpdateUser, UserList } from "./components/UserItems";
-import { CreateStudent, StudentsList, UpdateStudent } from "./components/Student";
+import { CreateStudent, EditStudent, StudentsList } from "./components/Student";
 
 function App() {
   const pathname = useLocation().pathname;
@@ -49,11 +49,11 @@ function App() {
         <Route path="*" element={<NotFound />} />
         <Route path="/dashboard" element={<HomeDashboard />} />,
         <Route path="/dashboard/employees" element={<EmployeeList />} />,
-        <Route path="/employees/add" element={<AddEmployee />} />,
+        <Route path="/employee/add" element={<AddEmployee />} />,
         <Route path="/employees/update/:id" element={<UpdateEmployee />} />,
         <Route path="/dashboard/students" element={<StudentsList />} />,
         <Route path="/student/add" element={<CreateStudent />} />,
-        <Route path="/admin/update/:id" element={<UpdateStudent />} />,
+        <Route path="/students/update/:id" element={<EditStudent />} />,
         <Route path="/dashboard/admins" element={<UserList />} />,
         <Route path="/admin/add" element={<CreateUser />} />,
         <Route path="/admin/update/:id" element={<UpdateUser />} />,

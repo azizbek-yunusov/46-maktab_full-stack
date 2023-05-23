@@ -117,7 +117,7 @@ export const postSlice = createSlice({
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.posts.push(action.payload);
+        state.posts.push(action.payload.post);
       })
       .addCase(createPost.rejected, (state, action) => {
         state.isLoading = false;

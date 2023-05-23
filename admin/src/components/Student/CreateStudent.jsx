@@ -15,8 +15,8 @@ import { Link, useNavigate } from "react-router-dom";
 import address from "../../data/address.json";
 import { Layout } from "../Layouts";
 import { HelmetTitle } from "../../utils";
-import { addEmployee } from "../../redux/employee";
 import { sciences } from "../../data/sciences";
+import { addStudent } from "../../redux/student";
 
 const CreateStudent = () => {
   let { t } = useTranslation(["user"]);
@@ -27,14 +27,12 @@ const CreateStudent = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [brith, setBrith] = useState("");
-  const [degree, setDegree] = useState("");
-  const [position, setPosition] = useState("");
-  const [phone, setPhone] = useState("");
+  const [classNumber, setClassNumber] = useState("");
+  const [classLetter, setClassLetter] = useState("");
   const [selectDistricts, setSelectDistricts] = useState([]);
   const [region, setRegion] = useState("Farg'ona Viloyati");
   const [district, setDistrict] = useState("Bog‘dod tumani");
   const [street, setStreet] = useState("");
-  const [house, setHouse] = useState("");
 
   const handleDateChange = (event) => {
     setBrith(event.target.value);
@@ -45,10 +43,14 @@ const CreateStudent = () => {
       let studentData = {
         firstName,
         lastName,
+        classNumber,
+        classLetter,
         brith,
-        address: `${region}, ${district}, ${street}`,
+        region,
+        district,
+        street,
       };
-      dispatch(addEmployee({ studentData, access_token }));
+      dispatch(addStudent({ studentData, access_token }));
       console.log(studentData);
       // if (!isLoading) {
       //   navigate("/dashboard/employees");
@@ -130,48 +132,48 @@ const CreateStudent = () => {
                       value={lastName}
                       onChange={(e) => setLastName(e.target.value)}
                     />
-
-                    <FormControl fullWidth>
-                      <InputLabel id="demo-simple-select-label">
-                        {t("degree")}
-                      </InputLabel>
-                      <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={degree}
-                        label={t("degree")}
-                        onChange={(e) => setDegree(e.target.value)}
-                      >
-                        <MenuItem value="oliy">{t("oliy")}</MenuItem>
-                        <MenuItem value="urta">{t("urta")}</MenuItem>
-                      </Select>
-                    </FormControl>
-                    <FormControl fullWidth>
-                      <InputLabel id="demo-simple-select-label">
-                        {t("position")}
-                      </InputLabel>
-                      <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={position}
-                        label={t("position")}
-                        onChange={(e) => setPosition(e.target.value)}
-                      >
-                        {sciences.map((item, index) => (
-                          <MenuItem key={index} value={item}>
-                            {`${t(item)} ${t("teacher")}`}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-
-                    <TextField
-                      required
-                      fullWidth
-                      label={t("phone")}
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
-                    />
+                    <div className="flex_center">
+                      <TextField
+                        required
+                        fullWidth
+                        min="1"
+                        max="1"
+                        type="number"
+                        sx={{ marginRight: "20px" }}
+                        label={t("class-number")}
+                        value={classNumber}
+                        onChange={(e) => setClassNumber(e.target.value)}
+                      />
+                      <FormControl fullWidth>
+                        <InputLabel id="demo-simple-select-label">
+                          {t("class-letter")}
+                        </InputLabel>
+                        <Select
+                          labelId="demo-simple-select-label"
+                          id="demo-simple-select"
+                          value={classLetter}
+                          label={t("class-letter")}
+                          onChange={(e) => setClassLetter(e.target.value)}
+                        >
+                          <MenuItem value="A">"A"</MenuItem>
+                          <MenuItem value="B">"B"</MenuItem>
+                          <MenuItem value="D">"D"</MenuItem>
+                          <MenuItem value="E">"E"</MenuItem>
+                          <MenuItem value="F">"F"</MenuItem>
+                        </Select>
+                      </FormControl>
+                    </div>
+                    <div className="block border border-gray-300 rounded-lg ">
+                      <p className="-mt-[10px] bg-white w-24 ml-2 text-gray-600 text-sm">
+                        {t("date-of-brith")}
+                      </p>
+                      <input
+                        type="date"
+                        className="mt-1 ml-5"
+                        value={brith}
+                        onChange={handleDateChange}
+                      />
+                    </div>
                   </div>
                   <h1 className="my-6 text-xl">{t("residential-address")}</h1>
                   <div className=" grid md:grid-cols-2 grid-cols-1 gap-5">
@@ -222,19 +224,11 @@ const CreateStudent = () => {
                       required
                       variant="outlined"
                       type="text"
-                      className="rounded-xl"
+                      className="rounded-xl col-span-2"
                       value={street}
                       onChange={(e) => setStreet(e.target.value)}
                       label={t("street")}
                     />
-                    <div className="block">
-                      <label>{t("date-of-brith")}</label>
-                      <input
-                        type="date"
-                        value={brith}
-                        onChange={handleDateChange}
-                      />
-                    </div>
                   </div>
                   <div className="w-full mt-10 flex justify-end">
                     <Button

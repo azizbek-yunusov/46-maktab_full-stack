@@ -13,7 +13,6 @@
   "projects": "Loyihalar",
   "team": "Jamoa",
   "region": "Viloyat",
-  "district": "Shahar/tuman",
   "new-address": "Yangi manzil qo'shish",
   "not-address": "Manzil kiritilmagan",
   "delete": "O'chirish",
@@ -84,7 +83,7 @@
   "degree": "Ma'lumoti",
   "phone": "Telefon raqami",
   "employee-info": "Xodim haqida ma'lumotlarini kiriting",
-  "residential-address": "Yashash manzili kirting",
+  "residential-address": "Yashash manzili kiriting",
   "address": "Manzili",
   "position": "Lavozimi",
   "date-of-brith": "Tug'ilgan sana",
@@ -103,5 +102,20 @@
   "mehnat": "Mehnat",
   "teacher": "o'qituvchisi",
   "oliy": "Oliy ma'lumotli(Bakalavr)",
-  "urta": "O'rta maxsus"
+  "urta": "O'rta maxsus",
+  "sex": "Jinsi",
+  "district": "Tumani",
+  "class": "Sinfi",
+  "femala": "Qiz bola",
+  "male": "O'gil bola",
+  "add-student": "Yangi o'quvchi qo'shish",
+  "all-students": "Barcha o'quvchilar",
+  "class-number": "Sinf raqami",
+  "class-letter": "Sinf nomi",
+  "update-student": "O'quvchi ma'lumotlarini tahrirlash",
+  "students": "O'quvchilar",
+  "add-employee": "Xodim qo'shish",
+  "select-employee-position": "Xodim lavozimini tanlang",
+  "select-employee-dargee": "Xodim ma'lumoti tanlang"
+  
 }

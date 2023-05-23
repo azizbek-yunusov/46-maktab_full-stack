@@ -8,21 +8,22 @@ import { Link } from "react-router-dom";
 import { UserRole, UserStatus } from "../Chips";
 
 const TableBody = ({
-  employees,
+  students,
   handleSelectAll,
-  selectedEmployeeIds,
-  filteredEmployees,
+  selectedStudentIds,
+  filteredStudents,
   handleSelectOne,
-  handleDeleteEmployee,
+  handleDeleteStudent,
 }) => {
   let { t } = useTranslation(["user"]);
   const { user } = useSelector((state) => state.auth);
   const tableHeadData = [
     "full-name",
     "date-of-brith",
-    "degree",
-    "position",
-    "phone",
+    "class",
+    "sex",
+    "district",
+    "address",
     "actions",
   ];
   return (
@@ -31,11 +32,11 @@ const TableBody = ({
         <tr className="bg-gray-100 text-left dark:bg-[#232338] text-gray-500 dark:text-gray-200 text-sm font-light rounded-t-lg uppercase">
           <th className="py-2 text-center">
             <Checkbox
-              checked={selectedEmployeeIds.length === employees.length}
+              checked={selectedStudentIds.length === students.length}
               color="primary"
               indeterminate={
-                selectedEmployeeIds.length > 0 &&
-                selectedEmployeeIds.length < employees.length
+                selectedStudentIds.length > 0 &&
+                selectedStudentIds.length < students.length
               }
               onChange={handleSelectAll}
             />
@@ -49,8 +50,8 @@ const TableBody = ({
         </tr>
       </thead>
       <tbody className="text-gray-600 dark:text-gray-300 text-sm font-light ">
-        {filteredEmployees.length ? (
-          filteredEmployees
+        {filteredStudents.length ? (
+          filteredStudents
             .map((item, index) => (
               <tr
                 key={index}
@@ -59,7 +60,7 @@ const TableBody = ({
                 <td className="py-3 flex_center">
                   {item._id !== user._id ? (
                     <Checkbox
-                      checked={selectedEmployeeIds.indexOf(item._id) !== -1}
+                      checked={selectedStudentIds.indexOf(item._id) !== -1}
                       onChange={(event) => handleSelectOne(event, item._id)}
                       value="true"
                     />
@@ -79,7 +80,7 @@ const TableBody = ({
                         className="transition_normal hover:text-purple-500"
                       >
                         {item.lastName
-                          ? `${item.firstName} ${item.lastName}`
+                          ? ` ${item.lastName} ${item.firstName}`
                           : item.firstName}
                       </Link>
                     </div>
@@ -92,21 +93,27 @@ const TableBody = ({
                 </td>
                 <td className="">
                   <div className="flex justify-start items-center">
-                    {t(item.degree)}
+                    {item.classNumber}
+                    {" - "}
+                    {item.classLetter}
+                  </div>
+                </td>
+                <td className="">
+                  <div className="flex justify-start items-center">
+                    {t(item.gender)}
+                  </div>
+                </td>
+                <td className="">
+                  <div className="flex justify-start items-center">
+                    {item.district}
+                  </div>
+                </td>
+                <td className="">
+                  <div className="flex justify-start items-center">
+                    {item.street}
                   </div>
                 </td>
 
-                <td className="">
-                  <div className="flex justify-start items-center">
-                   { `${t(item.position)} ${t("teacher")}`}
-                  </div>
-                </td>
-                <td className="">
-                  <div className="flex justify-start items-center">
-                    {"+998 "}
-                    {item.phone}
-                  </div>
-                </td>
                 <td className="">
                   {user._id !== item._id ? (
                     <div className="flex item-center justify-start">
@@ -134,13 +141,13 @@ const TableBody = ({
                           />
                         </svg>
                       </Link>
-                      <Link to={`/employees/update/${item._id}`}>
+                      <Link to={`/students/update/${item._id}`}>
                         <div className="cursor-pointer w-5 mr-3 transform hover:text-purple-500 hover:scale-110">
                           <FiEdit className="text-lg" />
                         </div>
                       </Link>
                       <button
-                        onClick={() => handleDeleteEmployee(item._id)}
+                        onClick={() => handleDeleteStudent(item._id)}
                         className="cursor-pointer w-5 mr-3 transform hover:text-purple-500 hover:scale-110"
                       >
                         <svg

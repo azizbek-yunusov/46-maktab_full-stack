@@ -1,8 +1,8 @@
-const StudentModel = require("../models/StudentModel");
+const StudentsModel = require("../models/StudentsModel");
 
 const getAllStudents = async (req, res) => {
   try {
-    const students = await StudentModel.find();
+    const students = await StudentsModel.find();
     res.status(200).json(students);
   } catch (err) {
     console.log(err);
@@ -11,7 +11,8 @@ const getAllStudents = async (req, res) => {
 
 const addStudents = async (req, res) => {
   try {
-    const student = await StudentModel.create(req.body);
+    console.log(req.body);
+    const student = await StudentsModel.create(req.body);
     await student.save();
     res.status(200).json(student);
   } catch (err) {
@@ -20,7 +21,7 @@ const addStudents = async (req, res) => {
 };
 const getBystudent = async (req, res) => {
   try {
-    const student = await StudentModel.findById(req.params.id);
+    const student = await StudentsModel.findById(req.params.id);
     res.status(200).json(student);
   } catch (err) {
     console.log(err);
@@ -29,7 +30,7 @@ const getBystudent = async (req, res) => {
 
 const updateStudent = async (req, res) => {
   try {
-    const student = await StudentModel.findByIdAndUpdate(
+    const student = await StudentsModel.findByIdAndUpdate(
       req.params.id,
       req.body
     );
@@ -40,7 +41,7 @@ const updateStudent = async (req, res) => {
 };
 const deleteStudent = async (req, res) => {
   try {
-    const student = await StudentModel.findByIdAndDelete(req.params.id);
+    const student = await StudentsModel.findByIdAndDelete(req.params.id);
     res.status(200).json(student);
   } catch (err) {
     console.log(err);

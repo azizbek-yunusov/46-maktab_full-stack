@@ -3,7 +3,7 @@ import axios from "axios";
 import { studentUrl } from "../../utils/baseUrls";
 
 export const getAllStudents = createAsyncThunk(
-  "employee/get-employees",
+  "student/get-students",
   async ({ access_token }, thunkAPI) => {
     try {
       const response = await axios.get(studentUrl, {
@@ -18,7 +18,7 @@ export const getAllStudents = createAsyncThunk(
   }
 );
 export const getByStudent = createAsyncThunk(
-  "employee/get-employee",
+  "student/get-student",
   async ({ id, access_token }) => {
     try {
       const { data } = await axios.get(`${studentUrl}${id}`, {
@@ -32,26 +32,28 @@ export const getByStudent = createAsyncThunk(
     }
   }
 );
-export const addEmployee = createAsyncThunk(
-  "employee/add-employee",
-  async ({ access_token, employeeData }) => {
+export const addStudent = createAsyncThunk(
+  "student/add-student",
+  async ({ studentData, access_token }) => {
     try {
-      const { data } = await axios.post(studentUrl, employeeData, {
+      console.log("add student");
+      const { data } = await axios.post(studentUrl, studentData, {
         headers: {
           Authorization: access_token,
         },
       });
+      console.log(data);
       return data;
     } catch (error) {
       return console.log(error);
     }
   }
 );
-export const updateEmployee = createAsyncThunk(
-  "employee/update-employee",
-  async ({ access_token, id, employeeData }) => {
+export const editStudent = createAsyncThunk(
+  "student/update-student",
+  async ({ access_token, id, studentData }) => {
     try {
-      const { data } = await axios.put(`${studentUrl}${id}`, employeeData, {
+      const { data } = await axios.put(`${studentUrl}${id}`, studentData, {
         headers: {
           Authorization: access_token,
         },
@@ -63,8 +65,8 @@ export const updateEmployee = createAsyncThunk(
   }
 );
 
-export const deleteEmployee = createAsyncThunk(
-  "employee/delete-employee",
+export const deleteStudent = createAsyncThunk(
+  "student/delete-student",
   async ({ access_token, id }, thunkApi) => {
     try {
       const { data } = await axios.delete(`${studentUrl}${id}`, {
@@ -78,19 +80,15 @@ export const deleteEmployee = createAsyncThunk(
     }
   }
 );
-export const selecteddeleteEmployee = createAsyncThunk(
-  "employee/selected-delete-employee",
+export const selecteddeleteStudent = createAsyncThunk(
+  "student/selected-delete-student",
   async ({ access_token, selectedIds }, thunkApi) => {
     try {
-      const { data } = await axios.post(
-        `${studentUrl}/selected`,
-        selectedIds,
-        {
-          headers: {
-            Authorization: access_token,
-          },
-        }
-      );
+      const { data } = await axios.post(`${studentUrl}/selected`, selectedIds, {
+        headers: {
+          Authorization: access_token,
+        },
+      });
       return data;
     } catch (error) {
       return console.log(error);
@@ -99,15 +97,15 @@ export const selecteddeleteEmployee = createAsyncThunk(
 );
 
 const initialState = {
-  employees: [],
-  employee: null,
+  students: [],
+  student: null,
   isLoading: false,
   isError: false,
   isSuccess: false,
   message: "",
 };
-export const employeeSlice = createSlice({
-  name: "employee",
+export const studentSlice = createSlice({
+  name: "student",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -119,7 +117,7 @@ export const employeeSlice = createSlice({
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.employees = action.payload;
+        state.students = action.payload;
       })
       .addCase(getAllStudents.rejected, (state, action) => {
         state.isLoading = false;
@@ -127,16 +125,16 @@ export const employeeSlice = createSlice({
         state.isSuccess = false;
         state.message = action.error;
       })
-      .addCase(addEmployee.pending, (state) => {
+      .addCase(addStudent.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(addEmployee.fulfilled, (state, action) => {
+      .addCase(addStudent.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.employee.push(action.payload);
+        state.students.push(action.payload);
       })
-      .addCase(addEmployee.rejected, (state, action) => {
+      .addCase(addStudent.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
@@ -149,7 +147,7 @@ export const employeeSlice = createSlice({
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.employee = action.payload;
+        state.student = action.payload;
       })
       .addCase(getByStudent.rejected, (state, action) => {
         state.isLoading = false;
@@ -157,50 +155,50 @@ export const employeeSlice = createSlice({
         state.isSuccess = false;
         state.message = action.error;
       })
-      .addCase(updateEmployee.pending, (state) => {
+      .addCase(editStudent.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(updateEmployee.fulfilled, (state, action) => {
+      .addCase(editStudent.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.updatedemployee = action.payload;
+        state.updatedstudent = action.payload;
       })
-      .addCase(updateEmployee.rejected, (state, action) => {
+      .addCase(editStudent.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error;
       })
-      .addCase(deleteEmployee.pending, (state) => {
+      .addCase(deleteStudent.pending, (state) => {
         state.isLoading = false;
       })
-      .addCase(deleteEmployee.fulfilled, (state, action) => {
+      .addCase(deleteStudent.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.employee = state.employee.filter(
-          (employee) => employee._id !== action.payload._id
+        state.student = state.student.filter(
+          (student) => student._id !== action.payload._id
         );
       })
-      .addCase(deleteEmployee.rejected, (state, action) => {
+      .addCase(deleteStudent.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error;
       })
-      .addCase(selecteddeleteEmployee.pending, (state) => {
+      .addCase(selecteddeleteStudent.pending, (state) => {
         state.isLoading = false;
       })
-      .addCase(selecteddeleteEmployee.fulfilled, (state, action) => {
+      .addCase(selecteddeleteStudent.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.employee = state.employee.filter(
-          (employee) => employee._id !== action.payload._id
+        state.student = state.student.filter(
+          (student) => student._id !== action.payload._id
         );
       })
-      .addCase(selecteddeleteEmployee.rejected, (state, action) => {
+      .addCase(selecteddeleteStudent.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
@@ -210,4 +208,4 @@ export const employeeSlice = createSlice({
   },
 });
 
-export default employeeSlice.reducer;
+export default studentSlice.reducer;

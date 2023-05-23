@@ -11,18 +11,31 @@ const studentSchema = new Schema({
     trim: true,
     required: true,
   },
-  group: {
+  classNumber: {
+    type: Number,
+    trim: true,
+    required: true,
+  },
+  classLetter: {
     type: String,
     trim: true,
     required: true,
   },
-  address: {
+  region: {
+    type: String,
+    required: true,
+  },
+  district: {
+    type: String,
+    required: true,
+  },
+  street: {
     type: String,
     required: true,
   },
   gender: {
     type: String,
-    required: true,
+    default: "male"
   },
   avatar: {
     type: String,
@@ -37,10 +50,6 @@ const studentSchema = new Schema({
     type: Date,
     default: new Date(),
   },
-});
-
-studentSchema.virtual("fullName").get(function () {
-  return this.firstName + " " + this.lastName;
 });
 
 module.exports = model("Student", studentSchema);

@@ -56,10 +56,13 @@
   "page-not-found": "Kecharasiz, ushbu sahifa topilmadi",
   "page-not-found-title": "Kechirasiz, siz qidirayotgan sahifani topa olmadik. Ehtimol, sizda URLni noto'g'ri kiritdingizmi? Imloni tekshirishga ishonch hosil qiling.",
   "go-to-home": "Bosh sahifaga",
-  "employee": "Xodimlar",
+  "employees": "Xodimlar",
   "students": "O'quvchilar",
   "sciences": "Fanlar",
   "images": "Banner, Galleriya",
   "admins": "Administratorlar",
-  "school": "Farg'ona vilyati Bag'dod tumani 46-maktab rasmiy veb sayti"
+  "school": "Farg'ona vilyati Bag'dod tumani 46-maktab rasmiy veb sayti",
+  "lesson-table": "Dars jadvali",
+  "appeals": "Murojaatlar"
+
 }

@@ -5,6 +5,8 @@ import "./App.css";
 import { Home, NotFound } from "./pages";
 import { Footer, NavBar, TopBar } from "./components/Layouts";
 import { LessonList } from "./components/Student";
+import PostDetail from "./components/News/PostDetail";
+import AboutPage from "./pages/AboutPage";
 
 function App() {
   useEffect(() => {
@@ -26,6 +28,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/student/lesson-list" element={<LessonList />} />
+        <Route path="/post/:id" element={<PostDetail />} />
+        <Route path="/about" element={<AboutPage />} />
       </Routes>
       <Footer />
     </main>

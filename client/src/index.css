@@ -18,11 +18,11 @@ html {
     font-family: "Inter";
   }
   body {
-    @apply dark:bg-[#312d4b] bg-white;
+    @apply bg-[#f9f9f956];
   }
 }
 .container-full {
-  @apply max-w-7xl  w-full lg:px-6 md:px-5 xl:px-4 px-4 mx-auto min-w-[320px] global-font;
+  @apply max-w-[1440px]  w-full lg:px-6 md:px-5 xl:px-4 px-4 mx-auto min-w-[320px] global-font;
 }
 .primary_bg {
   @apply bg-[#b038f6];
@@ -71,7 +71,7 @@ html {
   @apply relative flex rounded-lg mx-0 flex-row items-center h-11 focus:outline-none dark:bg-[#424069] bg-gradient-to-r from-cyan-500 to-teal-500 text-gray-100 dark:from-indigo-400 dark:to-blue-500 dark:text-gray-100 font-semibold hover:text-gray-800;
 }
 .dd {
-  color: #312d4b;
+  color: #f9f9f956;
 }
 .bg_secondary {
   @apply bg-[#ff8800];

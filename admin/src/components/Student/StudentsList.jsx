@@ -29,11 +29,11 @@ import TableBody from "./TableBody";
 import { DownloadTableExcel } from "react-export-table-to-excel";
 import moment from "moment";
 import ExportExcelUsersData from "./ExportExcelUsersData";
-import { deleteEmployee, getAllEmployees } from "../../redux/employee";
 import { sciences } from "../../data/sciences";
+import { deleteStudent, getAllStudents } from "../../redux/student";
 
 const StudentsList = () => {
-  const { isLoading, employees } = useSelector((state) => state.employee);
+  const { isLoading, students } = useSelector((state) => state.student);
   const { access_token } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const isXl = useMediaQuery("(min-width: 1245px)");
@@ -41,7 +41,7 @@ const StudentsList = () => {
   const tableRef = useRef(null);
 
   const [isTable, setIsTable] = useState(false);
-  const [selectedEmployeeIds, setSelectedEmployeeIds] = useState([]);
+  const [selectedStudentIds, setSelectedStudentIds] = useState([]);
   const [term, setTerm] = useState("");
   const [sort, setSort] = useState("");
   const [selectedStatus, setSelectStatus] = useState("");
@@ -50,11 +50,11 @@ const StudentsList = () => {
   const [page, setPage] = useState(0);
 
   // Filtering
-  const filteredEmployees = employees?.filter((user) => {
+  const filteredStudents = students?.filter((user) => {
     if (selectedStatus && user.status !== selectedStatus) {
       return false;
     }
-    if (position && user.position !== position) {
+    if (position && user.classLetter !== position) {
       return false;
     }
     if (term && !user.firstName.toLowerCase().includes(term.toLowerCase())) {
@@ -77,50 +77,47 @@ const StudentsList = () => {
     let newSelectedEmployeeIds;
 
     if (event.target.checked) {
-      newSelectedEmployeeIds = filteredEmployees.map(
-        (customer) => customer._id
-      );
+      newSelectedEmployeeIds = filteredStudents.map((customer) => customer._id);
     } else {
       newSelectedEmployeeIds = [];
     }
 
-    setSelectedEmployeeIds(newSelectedEmployeeIds);
+    setSelectedStudentIds(newSelectedEmployeeIds);
   };
 
   const handleSelectOne = (event, _id) => {
-    const selectedIndex = selectedEmployeeIds.indexOf(_id);
+    const selectedIndex = selectedStudentIds.indexOf(_id);
     let newSelectedEmployeeIds = [];
 
     if (selectedIndex === -1) {
       newSelectedEmployeeIds = newSelectedEmployeeIds.concat(
-        selectedEmployeeIds,
+        selectedStudentIds,
         _id
       );
     } else if (selectedIndex === 0) {
       newSelectedEmployeeIds = newSelectedEmployeeIds.concat(
-        selectedEmployeeIds.slice(1)
+        selectedStudentIds.slice(1)
       );
-    } else if (selectedIndex === selectedEmployeeIds.length - 1) {
+    } else if (selectedIndex === selectedStudentIds.length - 1) {
       newSelectedEmployeeIds = newSelectedEmployeeIds.concat(
-        selectedEmployeeIds.slice(0, -1)
+        selectedStudentIds.slice(0, -1)
       );
     } else if (selectedIndex > 0) {
       newSelectedEmployeeIds = newSelectedEmployeeIds.concat(
-        selectedEmployeeIds.slice(0, selectedIndex),
-        selectedEmployeeIds.slice(selectedIndex + 1)
+        selectedStudentIds.slice(0, selectedIndex),
+        selectedStudentIds.slice(selectedIndex + 1)
       );
     }
 
-    setSelectedEmployeeIds(newSelectedEmployeeIds);
+    setSelectedStudentIds(newSelectedEmployeeIds);
   };
   const handleSelectedDelete = async () => {
     try {
       const selectedIds = {
-        selected: selectedEmployeeIds,
+        selected: selectedStudentIds,
       };
       // await dispatch(selectedDeleteUser({ access_token, selectedIds }));
-      dispatch(getUsers());
-      setSelectedEmployeeIds([]);
+      setSelectedStudentIds([]);
       toast.success(t("user-selected-deleted"));
     } catch (err) {
       console.log();
@@ -128,7 +125,7 @@ const StudentsList = () => {
   };
   const handleDeleteEmployee = async (id) => {
     try {
-      await dispatch(deleteEmployee({ access_token, id }));
+      await dispatch(deleteStudent({ access_token, id }));
       toast.success(t("user-delete"));
     } catch (err) {
       console.log(err);
@@ -137,10 +134,9 @@ const StudentsList = () => {
 
   useEffect(() => {
     if (access_token) {
-      dispatch(getAllEmployees({ access_token }));
+      dispatch(getAllStudents({ access_token }));
     }
   }, [access_token, dispatch]);
-  console.log(employees);
   const now = new Date();
   return (
     <main>
@@ -157,14 +153,14 @@ const StudentsList = () => {
               <div className="grid grid-cols-2 gap-x-5 pb-6 mb-3 px-5 border-b border-b-gray-200 dark:border-b-gray-600">
                 <FormControl size="medium" sx={{}}>
                   <InputLabel _id="demo-simple-select-label">
-                    {t("select-employee-position")}
+                    {t("select-student-position")}
                   </InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
                     _id="demo-simple-select"
                     value={position}
                     onChange={(e) => setPosition(e.target.value)}
-                    label={t("select-employee-position")}
+                    label={t("select-student-position")}
                   >
                     <MenuItem value={""}>{t("all")}</MenuItem>
                     {sciences.map((item, index) => (
@@ -177,14 +173,14 @@ const StudentsList = () => {
 
                 <FormControl size="medium" sx={{}}>
                   <InputLabel _id="demo-simple-select-label">
-                    {t("select-employee-dargee")}
+                    {t("select-student-dargee")}
                   </InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
                     _id="demo-simple-select"
                     value={selectedStatus}
                     onChange={(e) => setSelectStatus(e.target.value)}
-                    label={t("select-employee-dargee")}
+                    label={t("select-student-dargee")}
                   >
                     <MenuItem value={""}>{t("all")}</MenuItem>
                     <MenuItem value={"user"}>{t("active")}</MenuItem>
@@ -192,10 +188,10 @@ const StudentsList = () => {
                   </Select>
                 </FormControl>
               </div>
-              {selectedEmployeeIds.length ? (
+              {selectedStudentIds.length ? (
                 <div className="flex w-ful items-center justify-between py-[12.5px] px-4">
                   <h1 className="font-semibold text-gray-700">{`${
-                    selectedEmployeeIds.length
+                    selectedStudentIds.length
                   } ${t("selected")}`}</h1>
                   <Button
                     variant="contained"
@@ -268,7 +264,7 @@ const StudentsList = () => {
                       </Tooltip>
                     </DownloadTableExcel>
                     <Link to={"/student/add"}>
-                      <Tooltip title={t("add-employee-title")}>
+                      <Tooltip title={t("add-student-title")}>
                         <Button
                           variant="contained"
                           size="medium"
@@ -277,28 +273,28 @@ const StudentsList = () => {
                           }}
                           startIcon={<FiPlus />}
                         >
-                          {t("add-employee")}
+                          {t("add-student")}
                         </Button>
                       </Tooltip>
                     </Link>
                   </div>
                 </div>
               )}
-              {employees.length ? (
+              {students.length ? (
                 <>
                   <TableBody
-                    employees={employees}
+                    students={students}
                     handleSelectAll={handleSelectAll}
-                    selectedEmployeeIds={selectedEmployeeIds}
-                    filteredEmployees={filteredEmployees}
+                    selectedStudentIds={selectedStudentIds}
+                    filteredStudents={filteredStudents}
                     handleSelectOne={handleSelectOne}
                     handleDeleteEmployee={handleDeleteEmployee}
                   />
 
-                  <ExportExcelUsersData
-                    employees={employees}
+                  {/* <ExportExcelUsersData
+                    students={students}
                     tableRef={tableRef}
-                  />
+                  /> */}
                 </>
               ) : (
                 <NotData />

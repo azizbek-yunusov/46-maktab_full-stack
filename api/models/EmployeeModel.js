@@ -23,6 +23,14 @@ const employeeSchema = new Schema({
     type: String,
     required: true,
   },
+  region: {
+    type: String,
+    required: true,
+  },
+  district: {
+    type: String,
+    required: true,
+  },
   address: {
     type: String,
     required: true,

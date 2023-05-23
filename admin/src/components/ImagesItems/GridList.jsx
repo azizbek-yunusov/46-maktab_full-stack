@@ -27,29 +27,15 @@ const GridList = ({
                 className="h-44 w-full rounded-xl object-cover"
                 alt=""
               />
-              <h1 className="text_color text-lg">
-                {t("category")}: {item.category}
+              <h1 className="text_color text-lg mt-3">
+                {t("category")}: {t(item.category)}
               </h1>
               <div className="flex justify-end">
-                <Link to={`/image/${item._id}`}>
-                  <Tooltip title="Update Item">
-                    <IconButton
-                      fullWidth
-                      variant="contained"
-                      size="small"
-                      sx={{
-                        marginRight: "6px",
-                      }}
-                    >
-                      <BiEdit />
-                    </IconButton>
-                  </Tooltip>
-                </Link>
                 <Tooltip title="Delete Item">
                   <IconButton
                     onClick={() => handleDeleteImage(item._id)}
                     variant="contained"
-                    size="small"
+                    size="medium"
                     color="error"
                   >
                     <BsTrash />

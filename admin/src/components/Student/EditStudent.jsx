@@ -6,7 +6,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import address from "../../data/address.json";
 import { Layout } from "../Layouts";
 import { HelmetTitle } from "../../utils";
-import { addEmployee, getEmployee, updateEmployee } from "../../redux/employee";
+import { editStudent, getByStudent } from "../../redux/student";
 import { sciences } from "../../data/sciences";
 import { useEffect } from "react";
 import {
@@ -19,12 +19,12 @@ import {
   TextField,
 } from "@mui/material";
 
-const UpdateStudent = () => {
+const EditStudent = () => {
   let { t } = useTranslation(["user"]);
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isLoading, employee } = useSelector((state) => state.employee);
+  const { isLoading, student } = useSelector((state) => state.student);
   const { access_token } = useSelector((state) => state.auth);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -32,6 +32,8 @@ const UpdateStudent = () => {
   const [degree, setDegree] = useState("");
   const [position, setPosition] = useState("");
   const [phone, setPhone] = useState("");
+  const [classNumber, setClassNumber] = useState("");
+  const [classLetter, setClassLetter] = useState("");
   const [selectDistricts, setSelectDistricts] = useState([]);
   const [region, setRegion] = useState("Farg'ona Viloyati");
   const [district, setDistrict] = useState("Bog‘dod tumani");
@@ -47,14 +49,16 @@ const UpdateStudent = () => {
       let employeeData = {
         firstName,
         lastName,
-        phone,
-        degree,
         brith,
-        position,
+        classLetter,
+        classNumber,
+        region,
+        district,
+        street
       };
-      dispatch(updateEmployee({ id, employeeData, access_token }));
+      dispatch(editStudent({ id, employeeData, access_token }));
       // if (!isLoading) {
-      //   navigate("/dashboard/employees");
+      //   navigate("/dashboard/students");
       // }
       toast.success(t("success-added"));
     } catch (err) {
@@ -94,43 +98,36 @@ const UpdateStudent = () => {
   };
   useEffect(() => {
     if (access_token) {
-      dispatch(getEmployee({ id, access_token }));
-    }
-    if (employee) {
-      setDegree(employee.degree);
-      setFirstName(employee.firstName);
-      setLastName(employee.lastName);
-      setPosition(employee.position);
-      setBrith(employee.brith);
-      setPhone(employee.phone);
+      dispatch(getByStudent({ id, access_token }));
     }
   }, [dispatch, access_token, id]);
+
   useEffect(() => {
-    if (employee) {
-      setDegree(employee.degree);
-      setFirstName(employee.firstName);
-      setLastName(employee.lastName);
-      setPosition(employee.position);
-      setBrith(employee.brith);
-      setPhone(employee.phone);
+    if (student) {
+      setFirstName(student.firstName);
+      setLastName(student.lastName);
+      setBrith(student.brith);
+      setClassLetter(student.classLetter);
+      setClassNumber(student.classNumber);
+      setStreet(student.street);
     }
-  }, [employee]);
+  }, [student]);
   return (
     <>
-      <HelmetTitle title={`${t("update-employee")} - ${t("employees")}`} />
+      <HelmetTitle title={`${t("update-student")} - ${t("students")}`} />
       <Layout>
         <section className="relative">
           <div className="bg-gradient-to-r from-cyan-500 to-blue-500 w-full h-40 px-5 pt-4 text-gray-50 rounded-xl">
             <div className="flex_betwen">
-              <h1 className="text-white text-2xl">{t("update-employee")}</h1>
+              <h1 className="text-white text-2xl">{t("update-student")}</h1>
               <Breadcrumbs sx={{ color: "#ffff" }}>
                 <Link to={"/"} className="">
                   {t("home")}
                 </Link>
                 <Link to={"/myprofile"} className="">
-                  {t("employees")}
+                  {t("students")}
                 </Link>
-                <h1>{t("update-employee")}</h1>
+                <h1>{t("update-student")}</h1>
               </Breadcrumbs>
             </div>
           </div>
@@ -138,7 +135,6 @@ const UpdateStudent = () => {
             <div className="flex w-full p-8 px-8 xl:px-16">
               <div className="w-full">
                 <form onSubmit={updateEmployeeHandle}>
-                  <h1 className="my-6 text-xl">{t("employee-info")}</h1>
                   <div className="grid grid-cols-2 gap-5">
                     <TextField
                       required
@@ -154,50 +150,50 @@ const UpdateStudent = () => {
                       value={lastName}
                       onChange={(e) => setLastName(e.target.value)}
                     />
-
-                    <FormControl fullWidth>
-                      <InputLabel id="demo-simple-select-label">
-                        {t("degree")}
-                      </InputLabel>
-                      <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={degree}
-                        label={t("degree")}
-                        onChange={(e) => setDegree(e.target.value)}
-                      >
-                        <MenuItem value="oliy">{t("oliy")}</MenuItem>
-                        <MenuItem value="urta">{t("urta")}</MenuItem>
-                      </Select>
-                    </FormControl>
-                    <FormControl fullWidth>
-                      <InputLabel id="demo-simple-select-label">
-                        {t("position")}
-                      </InputLabel>
-                      <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={position}
-                        label={t("position")}
-                        onChange={(e) => setPosition(e.target.value)}
-                      >
-                        {sciences.map((item, index) => (
-                          <MenuItem key={index} value={item}>
-                            {`${t(item)} ${t("teacher")}`}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-
-                    <TextField
-                      required
-                      fullWidth
-                      label={t("phone")}
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
-                    />
+                    <div className="flex_center">
+                      <TextField
+                        required
+                        fullWidth
+                        min="1"
+                        max="1"
+                        type="number"
+                        sx={{ marginRight: "20px" }}
+                        label={t("class-number")}
+                        value={classNumber}
+                        onChange={(e) => setClassNumber(e.target.value)}
+                      />
+                      <FormControl fullWidth>
+                        <InputLabel id="demo-simple-select-label">
+                          {t("class-letter")}
+                        </InputLabel>
+                        <Select
+                          labelId="demo-simple-select-label"
+                          id="demo-simple-select"
+                          value={classLetter}
+                          label={t("class-letter")}
+                          onChange={(e) => setClassLetter(e.target.value)}
+                        >
+                          <MenuItem value="A">"A"</MenuItem>
+                          <MenuItem value="B">"B"</MenuItem>
+                          <MenuItem value="D">"D"</MenuItem>
+                          <MenuItem value="E">"E"</MenuItem>
+                          <MenuItem value="F">"F"</MenuItem>
+                        </Select>
+                      </FormControl>
+                    </div>
+                    <div className="block border border-gray-300 rounded-lg ">
+                      <p className="-mt-[10px] bg-white w-24 ml-2 text-gray-600 text-sm">
+                        {t("date-of-brith")}
+                      </p>
+                      <input
+                        type="date"
+                        className="mt-1 ml-5"
+                        value={brith}
+                        onChange={handleDateChange}
+                      />
+                    </div>
                   </div>
-                  {/* <h1 className="my-6 text-xl">{t("residential-address")}</h1>
+                  <h1 className="my-6 text-xl">{t("residential-address")}</h1>
                   <div className=" grid md:grid-cols-2 grid-cols-1 gap-5">
                     <FormControl fullWidth>
                       <InputLabel id="demo-simple-select-label">
@@ -243,22 +239,15 @@ const UpdateStudent = () => {
                     <TextField
                       id="outlined-basic"
                       fullWidth
+                      required
                       variant="outlined"
                       type="text"
-                      className="rounded-xl"
+                      className="rounded-xl col-span-2"
                       value={street}
                       onChange={(e) => setStreet(e.target.value)}
                       label={t("street")}
                     />
-                    <div className="block">
-                      <label>{t("date-of-brith")}</label>
-                      <input
-                        type="date"
-                        value={brith}
-                        onChange={handleDateChange}
-                      />
-                    </div>
-                  </div> */}
+                  </div>
                   <div className="w-full mt-10 flex justify-end">
                     <Button
                       onClick={() => navigate(-1)}
@@ -320,4 +309,4 @@ const UpdateStudent = () => {
   );
 };
 
-export default UpdateStudent;
+export default EditStudent;
