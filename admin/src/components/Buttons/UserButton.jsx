@@ -33,10 +33,8 @@ const UserButton = () => {
   const navigate = useNavigate();
   const signOutHandle = async () => {
     await dispatch(signOut());
-    if (!isLogged) {
-      navigate("/");
-      toast.success(t("logged-out"));
-    }
+    navigate("/");
+    toast.success(t("logged-out"));
   };
   const [anchorEl, setAnchorEl] = useState(null);
   const handleDropdownOpen = (event) => {

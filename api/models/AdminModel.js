@@ -35,7 +35,7 @@ const adminSchema = new Schema({
   },
   admin: {
     type: Boolean,
-    default: true,
+    default: false,
   },
   joinned: {
     type: Date,

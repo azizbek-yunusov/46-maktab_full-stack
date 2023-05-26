@@ -4,13 +4,14 @@ import { userUrl } from "../../utils/baseUrls";
 
 export const getUsers = createAsyncThunk(
   "user/get-users",
-  async (access_token, thunkAPI) => {
+  async ({ access_token }, thunkAPI) => {
     try {
       const { data } = await axios.get(userUrl, {
         headers: {
           Authorization: access_token,
         },
       });
+      console.log(data);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.data);
@@ -116,7 +117,7 @@ export const customerSlice = createSlice({
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        // state.users = action.payload;
+        state.users = action.payload;
       })
       .addCase(getUsers.rejected, (state, action) => {
         state.isLoading = false;

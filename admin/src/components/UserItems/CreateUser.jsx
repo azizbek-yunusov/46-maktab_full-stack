@@ -65,11 +65,10 @@ const CreateUser = () => {
     e.preventDefault();
     try {
       let userData = {
-        name,
-        lastName,
+        first_name: name,
+        last_name: lastName,
         password,
         email,
-        phoneNumber,
         avatar,
         admin,
       };
@@ -138,6 +137,7 @@ const CreateUser = () => {
                             <input
                               hidden
                               type="file"
+                              required
                               onChange={onChange}
                               accept="image/png, image/jpeg"
                               id="account-settings-upload-image"
@@ -211,7 +211,7 @@ const CreateUser = () => {
                       <TextField
                         required
                         fullWidth
-                        type="text"
+                        type="password"
                         label={t("password")}
                         placeholder={t("password-p")}
                         value={password}

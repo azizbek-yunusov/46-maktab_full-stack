@@ -56,5 +56,9 @@
   "view": "ko'rish",
   "update": "yangilash",
   "news": "Yangiliklar",
-  "all-view": "BARCHASINI KO'RISH"
+  "all-view": "BARCHASINI KO'RISH",
+  "applicant": "Murojaatchi",
+  "verify": "Tasdiq",
+  "date-sent": "Yuborilgan sana",
+  "all-appeals": "Barcha murojaatlar"
 }

@@ -21,27 +21,92 @@ const EmployeeView = () => {
   }, [dispatch, access_token, id]);
   return (
     <>
-      <HelmetTitle title={`${t("update-employee")} - ${t("employees")}`} />
+      <HelmetTitle title={`${t("employee-view")} - ${t("employees")}`} />
       <Layout>
-        <section className="relative">
-          <div className="bg-gradient-to-r from-cyan-500 to-blue-500 w-full h-40 px-5 pt-4 text-gray-50 rounded-xl">
-            <div className="flex_betwen">
-              <h1 className="text-white text-2xl">{t("update-employee")}</h1>
-              <Breadcrumbs sx={{ color: "#ffff" }}>
-                <Link to={"/"} className="">
-                  {t("home")}
-                </Link>
-                <Link to={"/myprofile"} className="">
-                  {t("employees")}
-                </Link>
-                <h1>{t("update-employee")}</h1>
-              </Breadcrumbs>
+        {employee && (
+          <section className="relative px-24">
+            <div className=" my-8">
+              <div className="grid grid-cols-2 gap-x-2">
+                <div className="">
+                  <h1 className="text-2xl text-center font-semibold mb-4 uppercase">
+                    {t("reference")}
+                  </h1>
+                  <p className="text-2xl text-center font-semibold">
+                    {employee.firstName} {employee.lastName}
+                  </p>
+                </div>
+                <div className="flex justify-around ">
+                  <img
+                    src={employee.avatar}
+                    className="rounded-md h-40"
+                    alt=""
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-5 my-6">
+                <div className="">
+                  <h1 className="text-xl font-semibold">{t("data-brith")}:</h1>
+                  <p className="mt-1">{employee.brith}</p>
+                </div>
+                <div className="">
+                  <h1 className="text-xl font-semibold">
+                    {t("place-of-birth")}:
+                  </h1>
+                  <p className="mt-1">
+                    {employee.region}
+                    {", "}
+                    {employee.district}
+                    {", "}
+                    {employee.address}
+                  </p>
+                </div>
+                <div className="">
+                  <h1 className="text-xl font-semibold">{t("nationality")}:</h1>
+                  <p className="mt-1">{t("uzbek")}</p>
+                </div>
+                <div className="">
+                  <h1 className="text-xl font-semibold">
+                    {t("partisanship")}:
+                  </h1>
+                  <p className="mt-1">{"-"}</p>
+                </div>
+                <div className="">
+                  <h1 className="text-xl font-semibold">{t("information")}:</h1>
+                  <p className="mt-1"> {t(employee.degree)}</p>
+                </div>
+                <div className="">
+                  <h1 className="text-xl font-semibold">
+                    {t("completed-by")}:
+                  </h1>
+                  <p className="mt-1">{t("non")}</p>
+                </div>
+                <div className="">
+                  <h1 className="text-xl font-semibold">
+                    {t("education-specialization")}:
+                  </h1>
+                </div>
+                <div className="">
+                  <h1 className="text-xl font-semibold">
+                    {t(employee.position)}:
+                  </h1>
+                </div>
+                <div className="">
+                  <h1 className="text-xl font-semibold">{t("degree-info")}:</h1>
+                  <p className="mt-1"> {t(employee.degree)}</p>
+                </div>
+                <div className="">
+                  <h1 className="text-xl font-semibold">
+                    {t("scientific-title")}:
+                  </h1>
+                  <p className="mt-1">{t("non")}</p>
+                </div>
+              </div>
+              <div className="">
+                <h1 className="text-2xl text-center font-semibold mb-4 uppercase"></h1>
+              </div>
             </div>
-          </div>
-          <div className="">
-            {employee.firstName}
-          </div>
-        </section>
+          </section>
+        )}
       </Layout>
     </>
   );

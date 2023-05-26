@@ -17,7 +17,14 @@ const TableBody = ({
 }) => {
   let { t } = useTranslation(["user"]);
   const { user } = useSelector((state) => state.auth);
-  const tableHeadData = ["user", "role", "joined", "status", "actions"];
+  const tableHeadData = [
+    "user",
+    "email",
+    "role",
+    "joined",
+    "status",
+    "actions",
+  ];
   return (
     <table className="min-w-max w-full table-auto rounded-lg overflow-scroll">
       <thead>
@@ -78,14 +85,16 @@ const TableBody = ({
                         }
                         className="transition_normal hover:text-purple-500"
                       >
-                        {item.lastName
-                          ? `${item.name} ${item.lastName}`
-                          : item.name}
+                        {item.last_name
+                          ? `${item.first_name} ${item.last_name}`
+                          : item.first_name}
                       </Link>
-                      <span className="text-gray-500 text-[13px]">
-                        {item.email}
-                      </span>
                     </div>
+                  </div>
+                </td>
+                <td className="">
+                  <div className="flex justify-start items-center">
+                    {item.email}
                   </div>
                 </td>
                 <td className="">
@@ -95,12 +104,12 @@ const TableBody = ({
                 </td>
                 <td className="">
                   <div className="flex justify-start items-center">
-                    <span>{moment(item.createdAt).format("lll")}</span>
+                    <span>{moment(item.joinned).format("lll")}</span>
                   </div>
                 </td>
                 <td className="">
                   <div className="flex justify-start items-center">
-                    <UserStatus status={item?.status} />
+                    <UserStatus status={!item?.status} />
                   </div>
                 </td>
                 <td className="">

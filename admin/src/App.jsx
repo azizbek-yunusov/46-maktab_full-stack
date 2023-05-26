@@ -19,6 +19,7 @@ import { refreshToken } from "./redux/auth";
 import {
   AddEmployee,
   EmployeeList,
+  EmployeeView,
   UpdateEmployee,
 } from "./components/Employee";
 import {
@@ -27,8 +28,15 @@ import {
   PostsList,
   UpdatePost,
 } from "./components/Post";
-import { CreateUser, UpdateUser, UserList } from "./components/UserItems";
+import {
+  CreateUser,
+  Profile,
+  UpdateUser,
+  UserList,
+} from "./components/UserItems";
 import { CreateStudent, EditStudent, StudentsList } from "./components/Student";
+import LessonList from "./components/Lesson/LessonList";
+import AppealList from "./components/Appeal/AppealList";
 
 function App() {
   const pathname = useLocation().pathname;
@@ -47,27 +55,35 @@ function App() {
       <Routes>
         <Route path="/" element={<SignIn />} />
         <Route path="*" element={<NotFound />} />
-        <Route path="/dashboard" element={<HomeDashboard />} />,
-        <Route path="/dashboard/employees" element={<EmployeeList />} />,
-        <Route path="/employee/add" element={<AddEmployee />} />,
-        <Route path="/employees/update/:id" element={<UpdateEmployee />} />,
-        <Route path="/dashboard/students" element={<StudentsList />} />,
-        <Route path="/student/add" element={<CreateStudent />} />,
-        <Route path="/students/update/:id" element={<EditStudent />} />,
-        <Route path="/dashboard/admins" element={<UserList />} />,
-        <Route path="/admin/add" element={<CreateUser />} />,
-        <Route path="/admin/update/:id" element={<UpdateUser />} />,
-        <Route path="/dashboard/images" element={<ImagesList />} />,
-        <Route path="/image/upload" element={<UploadImage />} />,
-        <Route path="/dashboard/posts" element={<PostsList />} />,
-        <Route path="/post/create" element={<CreatePost />} />,
-        <Route path="/post/detail/:id" element={<PostDetail />} />,
-        <Route path="/post/update/:id" element={<UpdatePost />} />,
-        {/* {auth.isLogged && (
+
+        <Route path="/dashboard/cabinet" element={<Profile />} />
+        {/* <Route path="/cabinet/edit" element={<EditCabinet />} /> */}
+        {/* <Route path="/cabinet/team" element={<Team />} /> */}
+        {/* <Route path="/cabinet/projects" element={<Projects />} /> */}
+        {auth.isLogged && (
           <>
-            
+            <Route path="/" element={<SignIn />} />
+            <Route path="/dashboard" element={<HomeDashboard />} />,
+            <Route path="/dashboard/employees" element={<EmployeeList />} />,
+            <Route path="/employee/add" element={<AddEmployee />} />,
+            <Route path="/employees/update/:id" element={<UpdateEmployee />} />,
+            <Route path="/employee/view/:id" element={<EmployeeView />} />,
+            <Route path="/dashboard/students" element={<StudentsList />} />,
+            <Route path="/student/add" element={<CreateStudent />} />,
+            <Route path="/students/update/:id" element={<EditStudent />} />,
+            <Route path="/dashboard/admins" element={<UserList />} />,
+            <Route path="/admin/add" element={<CreateUser />} />,
+            <Route path="/user/update/:id" element={<UpdateUser />} />,
+            <Route path="/dashboard/images" element={<ImagesList />} />,
+            <Route path="/image/upload" element={<UploadImage />} />,
+            <Route path="/dashboard/posts" element={<PostsList />} />,
+            <Route path="/post/create" element={<CreatePost />} />,
+            <Route path="/post/detail/:id" element={<PostDetail />} />,
+            <Route path="/post/update/:id" element={<UpdatePost />} />,
+            <Route path="/dashboard/appeals" element={<AppealList />} />,
+            <Route path="/dashboard/lesson-table" element={<LessonList />} />,
           </>
-        )} */}
+        )}
       </Routes>
       {auth.isLoading && <FetchLoader isLoading={auth.isLoading} />}
     </div>

@@ -1,12 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { employeeUrl } from "../../utils/baseUrls";
+import { appealUrl } from "../../utils/baseUrls";
 
-export const getAllEmployees = createAsyncThunk(
-  "employee/get-employees",
+export const getAllAppeals = createAsyncThunk(
+  "appeal/get-appeals",
   async ({ access_token }, thunkAPI) => {
     try {
-      const response = await axios.get(employeeUrl, {
+      const response = await axios.get(appealUrl, {
         headers: {
           Authorization: access_token,
         },
@@ -17,11 +17,11 @@ export const getAllEmployees = createAsyncThunk(
     }
   }
 );
-export const getEmployee = createAsyncThunk(
-  "employee/get-employee",
+export const getByAppeal = createAsyncThunk(
+  "appeal/get-appeal",
   async ({ id, access_token }) => {
     try {
-      const { data } = await axios.get(`${employeeUrl}${id}`, {
+      const { data } = await axios.get(`${appealUrl}${id}`, {
         headers: {
           Authorization: access_token,
         },
@@ -32,26 +32,28 @@ export const getEmployee = createAsyncThunk(
     }
   }
 );
-export const addEmployee = createAsyncThunk(
-  "employee/add-employee",
-  async ({ access_token, employeeData }) => {
+export const addAppeal = createAsyncThunk(
+  "appeal/add-appeal",
+  async ({ studentData, access_token }) => {
     try {
-      const { data } = await axios.post(employeeUrl, employeeData, {
+      console.log("add appeal");
+      const { data } = await axios.post(appealUrl, studentData, {
         headers: {
           Authorization: access_token,
         },
       });
+      console.log(data);
       return data;
     } catch (error) {
       return console.log(error);
     }
   }
 );
-export const updateEmployee = createAsyncThunk(
-  "employee/update-employee",
-  async ({ access_token, id, employeeData }) => {
+export const editAppeal = createAsyncThunk(
+  "appeal/update-appeal",
+  async ({ access_token, id, studentData }) => {
     try {
-      const { data } = await axios.put(`${employeeUrl}${id}`, employeeData, {
+      const { data } = await axios.put(`${appealUrl}${id}`, studentData, {
         headers: {
           Authorization: access_token,
         },
@@ -63,11 +65,11 @@ export const updateEmployee = createAsyncThunk(
   }
 );
 
-export const deleteEmployee = createAsyncThunk(
-  "employee/delete-employee",
+export const deleteAppeal = createAsyncThunk(
+  "appeal/delete-appeal",
   async ({ access_token, id }, thunkApi) => {
     try {
-      const { data } = await axios.delete(`${employeeUrl}${id}`, {
+      const { data } = await axios.delete(`${appealUrl}${id}`, {
         headers: {
           Authorization: access_token,
         },
@@ -78,19 +80,15 @@ export const deleteEmployee = createAsyncThunk(
     }
   }
 );
-export const selecteddeleteEmployee = createAsyncThunk(
-  "employee/selected-delete-employee",
+export const selecteddeleteAppeal = createAsyncThunk(
+  "appeal/selected-delete-appeal",
   async ({ access_token, selectedIds }, thunkApi) => {
     try {
-      const { data } = await axios.post(
-        `${employeeUrl}/selected`,
-        selectedIds,
-        {
-          headers: {
-            Authorization: access_token,
-          },
-        }
-      );
+      const { data } = await axios.post(`${appealUrl}/selected`, selectedIds, {
+        headers: {
+          Authorization: access_token,
+        },
+      });
       return data;
     } catch (error) {
       return console.log(error);
@@ -99,108 +97,108 @@ export const selecteddeleteEmployee = createAsyncThunk(
 );
 
 const initialState = {
-  employees: [],
-  employee: null,
+  appeals: [],
+  appeal: null,
   isLoading: false,
   isError: false,
   isSuccess: false,
   message: "",
 };
-export const employeeSlice = createSlice({
-  name: "employee",
+export const appealSlice = createSlice({
+  name: "appeal",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getAllEmployees.pending, (state) => {
+      .addCase(getAllAppeals.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getAllEmployees.fulfilled, (state, action) => {
+      .addCase(getAllAppeals.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.employees = action.payload;
+        state.appeals = action.payload;
       })
-      .addCase(getAllEmployees.rejected, (state, action) => {
+      .addCase(getAllAppeals.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error;
       })
-      .addCase(addEmployee.pending, (state) => {
+      .addCase(addAppeal.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(addEmployee.fulfilled, (state, action) => {
+      .addCase(addAppeal.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.employee.push(action.payload);
+        state.appeals.push(action.payload);
       })
-      .addCase(addEmployee.rejected, (state, action) => {
+      .addCase(addAppeal.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error;
       })
-      .addCase(getEmployee.pending, (state) => {
+      .addCase(getByAppeal.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getEmployee.fulfilled, (state, action) => {
+      .addCase(getByAppeal.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.employee = action.payload;
+        state.appeal = action.payload;
       })
-      .addCase(getEmployee.rejected, (state, action) => {
+      .addCase(getByAppeal.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error;
       })
-      .addCase(updateEmployee.pending, (state) => {
+      .addCase(editAppeal.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(updateEmployee.fulfilled, (state, action) => {
+      .addCase(editAppeal.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.updatedemployee = action.payload;
+        state.updatedstudent = action.payload;
       })
-      .addCase(updateEmployee.rejected, (state, action) => {
+      .addCase(editAppeal.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error;
       })
-      .addCase(deleteEmployee.pending, (state) => {
+      .addCase(deleteAppeal.pending, (state) => {
         state.isLoading = false;
       })
-      .addCase(deleteEmployee.fulfilled, (state, action) => {
+      .addCase(deleteAppeal.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.employees = state.employees.filter(
-          (employee) => employee._id !== action.payload._id
+        state.appeals = state.appeals.filter(
+          (appeal) => appeal._id !== action.payload._id
         );
       })
-      .addCase(deleteEmployee.rejected, (state, action) => {
+      .addCase(deleteAppeal.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error;
       })
-      .addCase(selecteddeleteEmployee.pending, (state) => {
+      .addCase(selecteddeleteAppeal.pending, (state) => {
         state.isLoading = false;
       })
-      .addCase(selecteddeleteEmployee.fulfilled, (state, action) => {
+      .addCase(selecteddeleteAppeal.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.employee = state.employee.filter(
-          (employee) => employee._id !== action.payload._id
+        state.appeal = state.appeal.filter(
+          (appeal) => appeal._id !== action.payload._id
         );
       })
-      .addCase(selecteddeleteEmployee.rejected, (state, action) => {
+      .addCase(selecteddeleteAppeal.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
@@ -210,4 +208,4 @@ export const employeeSlice = createSlice({
   },
 });
 
-export default employeeSlice.reducer;
+export default appealSlice.reducer;

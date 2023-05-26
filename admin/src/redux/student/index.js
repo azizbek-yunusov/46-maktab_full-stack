@@ -177,7 +177,7 @@ export const studentSlice = createSlice({
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.student = state.student.filter(
+        state.students = state.students.filter(
           (student) => student._id !== action.payload._id
         );
       })

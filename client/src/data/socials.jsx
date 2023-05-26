@@ -22,6 +22,28 @@ export const socials = [
     icon: <BsYoutube />,
   },
 ];
+export const tel = [
+  {
+    name: "facebook",
+    href: "https://azizbek.vercel.app/",
+    icon: <BsFacebook />,
+  },
+  {
+    name: "telegram",
+    href: "https://azizbek.vercel.app/",
+    icon: <BsTelegram />,
+  },
+  {
+    name: "instagram",
+    href: "https://azizbek.vercel.app/",
+    icon: <BsInstagram />,
+  },
+  {
+    name: "telegram",
+    href: "https://azizbek.vercel.app/",
+    icon: <BsYoutube />,
+  },
+];
 export const about = [
   {
     name: "about-me",

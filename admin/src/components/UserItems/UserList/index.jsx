@@ -22,11 +22,6 @@ import { FiPlus } from "react-icons/fi";
 import { MdDelete } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import {
-  deleteUser,
-  getUsers,
-  selectedDeleteUser,
-} from "../../../redux/customer";
 import { HelmetTitle } from "../../../utils";
 import NotData from "../../Helpers/NotData";
 import { Layout } from "../../Layouts";
@@ -35,6 +30,7 @@ import TableBody from "./TableBody";
 import { DownloadTableExcel } from "react-export-table-to-excel";
 import moment from "moment";
 import ExportExcelUsersData from "./ExportExcelUsersData";
+import { deleteUser, getUsers, selectedDeleteUser } from "../../../redux/customer";
 
 const UsersTable = () => {
   const { isLoading, users } = useSelector((state) => state.customer);
@@ -60,7 +56,7 @@ const UsersTable = () => {
     if (role && user.admin !== role) {
       return false;
     }
-    if (term && !user.name.toLowerCase().includes(term.toLowerCase())) {
+    if (term && !user.first_name.toLowerCase().includes(term.toLowerCase())) {
       return false;
     }
     // if (selectedDeleteOrder) {
@@ -137,7 +133,7 @@ const UsersTable = () => {
   };
 
   useEffect(() => {
-    dispatch(getUsers(access_token));
+    dispatch(getUsers({ access_token }));
   }, [access_token, dispatch]);
   console.log(users);
   const now = new Date();
@@ -259,35 +255,6 @@ const UsersTable = () => {
                     />
                   </FormControl>
                   <div className="flex items-center">
-                    {isXl ? (
-                      <div className="">
-                        <IconButton
-                          onClick={() => setIsTable(false)}
-                          aria-label="Table"
-                          color={!isTable ? "secondary" : "default"}
-                        >
-                          <BiTable />
-                        </IconButton>
-                        <IconButton
-                          onClick={() => setIsTable(true)}
-                          aria-label="Table"
-                          color={isTable ? "secondary" : "default"}
-                        >
-                          <BsGrid />
-                        </IconButton>
-                      </div>
-                    ) : (
-                      <div className="">
-                        <IconButton
-                          onClick={() => setIsTable(!isTable)}
-                          aria-label="Table"
-                          color="primary"
-                        >
-                          {isTable ? <BiTable /> : <BsGrid />}
-                        </IconButton>
-                      </div>
-                    )}
-
                     <DownloadTableExcel
                       filename={`${t("users-list")}-${moment(now).format("l")}`}
                       sheet="users"
@@ -318,7 +285,7 @@ const UsersTable = () => {
                           }}
                           startIcon={<FiPlus />}
                         >
-                          {t("add-user")}
+                          {t("add-admin")}
                         </Button>
                       </Tooltip>
                     </Link>

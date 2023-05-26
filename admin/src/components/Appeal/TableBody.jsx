@@ -7,35 +7,27 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const TableBody = ({
-  students,
+  appeals,
   handleSelectAll,
-  selectedStudentIds,
-  filteredStudents,
+  selectedAppeals,
+  filteredAppeals,
   handleSelectOne,
-  handleDeleteStudent,
+  handleDeleteAppeal,
 }) => {
-  let { t } = useTranslation(["user"]);
+  let { t } = useTranslation(["dashboard"]);
   const { user } = useSelector((state) => state.auth);
-  const tableHeadData = [
-    "full-name",
-    "date-of-brith",
-    "class",
-    "sex",
-    "district",
-    "address",
-    "actions",
-  ];
+  const tableHeadData = ["applicant", "email", "verify", "date-sent", "actions"];
   return (
     <table className="min-w-max w-full table-auto rounded-lg overflow-scroll">
       <thead>
         <tr className="bg-gray-100 text-left dark:bg-[#232338] text-gray-500 dark:text-gray-200 text-sm font-light rounded-t-lg uppercase">
           <th className="py-2 text-center">
             <Checkbox
-              checked={selectedStudentIds.length === students.length}
+              checked={selectedAppeals.length === appeals.length}
               color="primary"
               indeterminate={
-                selectedStudentIds.length > 0 &&
-                selectedStudentIds.length < students.length
+                selectedAppeals.length > 0 &&
+                selectedAppeals.length < appeals.length
               }
               onChange={handleSelectAll}
             />
@@ -49,8 +41,8 @@ const TableBody = ({
         </tr>
       </thead>
       <tbody className="text-gray-600 dark:text-gray-300 text-sm font-light ">
-        {filteredStudents.length ? (
-          filteredStudents
+        {filteredAppeals.length ? (
+          filteredAppeals
             .map((item, index) => (
               <tr
                 key={index}
@@ -59,7 +51,7 @@ const TableBody = ({
                 <td className="py-3 flex_center">
                   {item._id !== user._id ? (
                     <Checkbox
-                      checked={selectedStudentIds.indexOf(item._id) !== -1}
+                      checked={selectedAppeals.indexOf(item._id) !== -1}
                       onChange={(event) => handleSelectOne(event, item._id)}
                       value="true"
                     />
@@ -70,46 +62,23 @@ const TableBody = ({
                 <td className="py-3 px-2 xl:px-3 whitespace-nowrap">
                   <div className="flex justify-start items-center ">
                     <div className="flex flex-col mr-2">
-                      <Link
-                        to={
-                          user._id !== item._id
-                            ? `/user/${item._id}`
-                            : `/dashboard/cabinet`
-                        }
-                        className="transition_normal hover:text-purple-500"
-                      >
-                        {item.lastName
-                          ? ` ${item.lastName} ${item.firstName}`
-                          : item.firstName}
-                      </Link>
+                      {item.fullName}
                     </div>
                   </div>
                 </td>
                 <td className="">
                   <div className="flex justify-start items-center">
-                    {t(item.brith)}
+                    {t(item.email)}
                   </div>
                 </td>
                 <td className="">
                   <div className="flex justify-start items-center">
-                    {item.classNumber}
-                    {" - "}
-                    {item.classLetter}
+                    {item.verify ? "tasdiqlangan" : "tasdiqlanmagan"}
                   </div>
                 </td>
                 <td className="">
                   <div className="flex justify-start items-center">
-                    {t(item.gender)}
-                  </div>
-                </td>
-                <td className="">
-                  <div className="flex justify-start items-center">
-                    {item.district}
-                  </div>
-                </td>
-                <td className="">
-                  <div className="flex justify-start items-center">
-                    {item.street}
+                    {moment(item.createdAt).format("lll")}
                   </div>
                 </td>
 
@@ -140,13 +109,13 @@ const TableBody = ({
                           />
                         </svg>
                       </Link>
-                      <Link to={`/students/update/${item._id}`}>
+                      <Link to={`/appeals/update/${item._id}`}>
                         <div className="cursor-pointer w-5 mr-3 transform hover:text-purple-500 hover:scale-110">
                           <FiEdit className="text-lg" />
                         </div>
                       </Link>
                       <button
-                        onClick={() => handleDeleteStudent(item._id)}
+                        onClick={() => handleDeleteAppeal(item._id)}
                         className="cursor-pointer w-5 mr-3 transform hover:text-purple-500 hover:scale-110"
                       >
                         <svg

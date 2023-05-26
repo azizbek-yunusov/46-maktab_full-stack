@@ -64,14 +64,14 @@ const CabinetTop = () => {
         <div className="px-8 pb-5">
           <div className="z-40 absolute top-64 left-10 bg-white dark:bg-[#312d4b] p-[6px] max-w-max rounded-2xl -mt-14">
             <img
-              src={user.avatar.url || "/images/profile.png"}
+              src={user?.avatar.url || "/images/profile.png"}
               className="h-36 w-36 object-cover bg-[#39fde9] rounded-xl"
               alt=""
             />
           </div>
           <div className="flex flex-col pl-48">
             <h1 className="text-2xl mt-6 mb-3 text-gray-700 dark:text-gray-200 font-semibold">
-              {user.lastName ? `${user.name} ${user.lastName}` : user.name}
+              {user?.last_name ? `${user?.first_name} ${user?.last_name}` : user?.first_name}
             </h1>
             <div className="flex items-center">
               <p className="flex text-gray-600 dark:text-gray-200 bg-transparent mr-5">
@@ -84,7 +84,7 @@ const CabinetTop = () => {
               </p>
               <p className="flex text-gray-600 dark:text-gray-200 bg-transparent">
                 <AiFillCalendar className="text-xl mr-1" />
-                {moment(user.createdAt).format("LL")}
+                {moment(user?.createdAt).format("LL")}
               </p>
             </div>
           </div>

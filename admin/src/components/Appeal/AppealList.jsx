@@ -1,10 +1,7 @@
 import {
   Button,
-  Checkbox,
-  Chip,
   CircularProgress,
   FormControl,
-  IconButton,
   InputAdornment,
   InputLabel,
   MenuItem,
@@ -17,7 +14,6 @@ import React, { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { BiExport, BiSearch, BiTable } from "react-icons/bi";
-import { BsGrid } from "react-icons/bs";
 import { FiPlus } from "react-icons/fi";
 import { MdDelete } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
@@ -28,20 +24,20 @@ import { Layout } from "../Layouts";
 import TableBody from "./TableBody";
 import { DownloadTableExcel } from "react-export-table-to-excel";
 import moment from "moment";
-import ExportExcelUsersData from "./ExportExcelUsersData";
 import { sciences } from "../../data/sciences";
-import { deleteStudent, getAllStudents } from "../../redux/student";
+import { deleteStudent } from "../../redux/student";
+import { deleteAppeal, getAllAppeals } from "../../redux/appeal";
 
 const AppealList = () => {
-  const { isLoading, students } = useSelector((state) => state.student);
+  const { isLoading, appeals } = useSelector((state) => state.appeal);
   const { access_token } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const isXl = useMediaQuery("(min-width: 1245px)");
-  let { t } = useTranslation(["user"]);
+  let { t } = useTranslation(["dashboard"]);
   const tableRef = useRef(null);
 
   const [isTable, setIsTable] = useState(false);
-  const [selectedStudentIds, setSelectedStudentIds] = useState([]);
+  const [selectedAppeals, setSelectedAppealsIds] = useState([]);
   const [term, setTerm] = useState("");
   const [sort, setSort] = useState("");
   const [selectedStatus, setSelectStatus] = useState("");
@@ -50,18 +46,18 @@ const AppealList = () => {
   const [page, setPage] = useState(0);
 
   // Filtering
-  const filteredStudents = students?.filter((user) => {
-    if (selectedStatus && user.status !== selectedStatus) {
+  const filteredAppeals = appeals?.filter((appeal) => {
+    if (selectedStatus && appeal.status !== selectedStatus) {
       return false;
     }
-    if (position && user.classLetter !== position) {
+    if (position && appeal.classLetter !== position) {
       return false;
     }
-    if (term && !user.firstName.toLowerCase().includes(term.toLowerCase())) {
+    if (term && !appeal.fullName.toLowerCase().includes(term.toLowerCase())) {
       return false;
     }
     // if (selectedDeleteOrder) {
-    //   const orderDate = moment(user.createdAt);
+    //   const orderDate = moment(appeal.createdAt);
     //   const isRecentOrder = orderDate >= moment().subtract(30, "days");
     //   if (selectedOrderDate === "new" && !isRecentOrder) {
     //     return false;
@@ -74,59 +70,56 @@ const AppealList = () => {
     return true;
   });
   const handleSelectAll = (event) => {
-    let newSelectedEmployeeIds;
+    let newSelectedAppealIds;
 
     if (event.target.checked) {
-      newSelectedEmployeeIds = filteredStudents.map((customer) => customer._id);
+      newSelectedAppealIds = filteredAppeals.map((customer) => customer._id);
     } else {
-      newSelectedEmployeeIds = [];
+      newSelectedAppealIds = [];
     }
 
-    setSelectedStudentIds(newSelectedEmployeeIds);
+    setSelectedAppealsIds(newSelectedAppealIds);
   };
 
   const handleSelectOne = (event, _id) => {
-    const selectedIndex = selectedStudentIds.indexOf(_id);
-    let newSelectedEmployeeIds = [];
+    const selectedIndex = selectedAppeals.indexOf(_id);
+    let newSelectedAppealIds = [];
 
     if (selectedIndex === -1) {
-      newSelectedEmployeeIds = newSelectedEmployeeIds.concat(
-        selectedStudentIds,
-        _id
-      );
+      newSelectedAppealIds = newSelectedAppealIds.concat(selectedAppeals, _id);
     } else if (selectedIndex === 0) {
-      newSelectedEmployeeIds = newSelectedEmployeeIds.concat(
-        selectedStudentIds.slice(1)
+      newSelectedAppealIds = newSelectedAppealIds.concat(
+        selectedAppeals.slice(1)
       );
-    } else if (selectedIndex === selectedStudentIds.length - 1) {
-      newSelectedEmployeeIds = newSelectedEmployeeIds.concat(
-        selectedStudentIds.slice(0, -1)
+    } else if (selectedIndex === selectedAppeals.length - 1) {
+      newSelectedAppealIds = newSelectedAppealIds.concat(
+        selectedAppeals.slice(0, -1)
       );
     } else if (selectedIndex > 0) {
-      newSelectedEmployeeIds = newSelectedEmployeeIds.concat(
-        selectedStudentIds.slice(0, selectedIndex),
-        selectedStudentIds.slice(selectedIndex + 1)
+      newSelectedAppealIds = newSelectedAppealIds.concat(
+        selectedAppeals.slice(0, selectedIndex),
+        selectedAppeals.slice(selectedIndex + 1)
       );
     }
 
-    setSelectedStudentIds(newSelectedEmployeeIds);
+    setSelectedAppealsIds(newSelectedAppealIds);
   };
   const handleSelectedDelete = async () => {
     try {
       const selectedIds = {
-        selected: selectedStudentIds,
+        selected: selectedAppeals,
       };
       // await dispatch(selectedDeleteUser({ access_token, selectedIds }));
-      setSelectedStudentIds([]);
-      toast.success(t("user-selected-deleted"));
+      setSelectedAppealsIds([]);
+      toast.success(t("appeal-selected-deleted"));
     } catch (err) {
       console.log();
     }
   };
-  const handleDeleteEmployee = async (id) => {
+  const handleDeleteAppeal = async (id) => {
     try {
-      await dispatch(deleteStudent({ access_token, id }));
-      toast.success(t("user-delete"));
+      await dispatch(deleteAppeal({ access_token, id }));
+      toast.success(t("appeal-delete"));
     } catch (err) {
       console.log(err);
     }
@@ -134,13 +127,14 @@ const AppealList = () => {
 
   useEffect(() => {
     if (access_token) {
-      dispatch(getAllStudents({ access_token }));
+      dispatch(getAllAppeals({ access_token }));
     }
   }, [access_token, dispatch]);
   const now = new Date();
+  console.log(appeals);
   return (
     <main>
-      <HelmetTitle title={t("all-students")} />
+      <HelmetTitle title={t("all-appeals")} />
       <Layout>
         {isLoading ? (
           <CircularProgress />
@@ -183,15 +177,15 @@ const AppealList = () => {
                     label={t("select-student-dargee")}
                   >
                     <MenuItem value={""}>{t("all")}</MenuItem>
-                    <MenuItem value={"user"}>{t("active")}</MenuItem>
+                    <MenuItem value={"appeal"}>{t("active")}</MenuItem>
                     <MenuItem value={"admin"}>{t("banned")}</MenuItem>
                   </Select>
                 </FormControl>
               </div>
-              {selectedStudentIds.length ? (
+              {selectedAppeals.length ? (
                 <div className="flex w-ful items-center justify-between py-[12.5px] px-4">
                   <h1 className="font-semibold text-gray-700">{`${
-                    selectedStudentIds.length
+                    selectedAppeals.length
                   } ${t("selected")}`}</h1>
                   <Button
                     variant="contained"
@@ -280,19 +274,19 @@ const AppealList = () => {
                   </div>
                 </div>
               )}
-              {students.length ? (
+              {appeals.length ? (
                 <>
                   <TableBody
-                    students={students}
+                    appeals={appeals}
                     handleSelectAll={handleSelectAll}
-                    selectedStudentIds={selectedStudentIds}
-                    filteredStudents={filteredStudents}
+                    selectedAppeals={selectedAppeals}
+                    filteredAppeals={filteredAppeals}
                     handleSelectOne={handleSelectOne}
-                    handleDeleteEmployee={handleDeleteEmployee}
+                    handleDeleteAppeal={handleDeleteAppeal}
                   />
 
                   {/* <ExportExcelUsersData
-                    students={students}
+                    appeals={appeals}
                     tableRef={tableRef}
                   /> */}
                 </>

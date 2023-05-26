@@ -73,7 +73,7 @@ const TableBody = ({
                       <Link
                         to={
                           user._id !== item._id
-                            ? `/user/${item._id}`
+                            ? `/employee/view/${item._id}`
                             : `/dashboard/cabinet`
                         }
                         className="transition_normal hover:text-purple-500"
@@ -111,7 +111,7 @@ const TableBody = ({
                   {user._id !== item._id ? (
                     <div className="flex item-center justify-start">
                       <Link
-                        to={`/user/${item._id}`}
+                        to={`/employee/view/${item._id}`}
                         className="cursor-pointer w-5 mr-3 transform hover:text-purple-500 hover:scale-110"
                       >
                         <svg

@@ -13,7 +13,7 @@ const Urls = () => {
   const { t } = useTranslation(["home"]);
   const { isLoading, images } = useSelector((state) => state.image);
   return (
-    <section className="border-2 border-t-gray-200">
+    <section className="">
       <div className="container-full text-center my-12 grid grid-cols-4 gap-x-8">
         {urls.map((item, index) => (
           <a href={item.href} className="" target="_blank">

@@ -6,6 +6,7 @@ import employee from "./employee";
 import post from "./post";
 import customer from "./customer";
 import student from "./student";
+import appeal from "./appeal";
 import { Provider } from "react-redux";
 
 const store = configureStore({
@@ -15,7 +16,8 @@ const store = configureStore({
     post,
     customer,
     employee,
-    student
+    student,
+    appeal
   },
   devTools: true,
 });

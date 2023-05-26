@@ -66,11 +66,9 @@ const UpdateUser = () => {
     e.preventDefault();
     try {
       let userData = {
-        id,
-        name,
-        lastName,
+        first_name: name,
+        last_name: lastName,
         email,
-        phoneNumber,
         admin,
       };
       dispatch(updateUser({ access_token, id, userData }));
@@ -104,10 +102,9 @@ const UpdateUser = () => {
   }, [dispatch, id]);
   useEffect(() => {
     if (user) {
-      setName(user?.name || "");
-      setLastName(user?.lastName || "");
+      setName(user?.first_name || "");
+      setLastName(user?.last_name || "");
       setEmail(user?.email || "");
-      setPhoneNumber(user?.phoneNumber || "");
       setAdmin(user?.admin || false);
       setAvatarPreview(user?.avatar?.url || "/images/profile.png");
     }
@@ -200,34 +197,7 @@ const UpdateUser = () => {
                         onChange={(e) => setEmail(e.target.value)}
                       />
                     </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <InputMask
-                        mask="(99) 999 99 99"
-                        maskChar=" "
-                        value={phoneNumber}
-                        onChange={(e) => setPhoneNumber(e.target.value)}
-                      >
-                        {(inputProps) => (
-                          <TextField
-                            required
-                            {...inputProps}
-                            fullWidth
-                            variant="outlined"
-                            label={t("contact")}
-                            placeholder={t("contact-p")}
-                          />
-                        )}
-                      </InputMask>
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <TextField
-                        fullWidth
-                        type="text"
-                        label={t("password")}
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                      />
-                    </Grid>
+
                     <Grid item xs={12} sm={6}>
                       <FormControl>
                         <FormLabel id="demo-row-radio-buttons-group-label">

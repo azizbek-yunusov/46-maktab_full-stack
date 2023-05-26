@@ -116,6 +116,20 @@
   "students": "O'quvchilar",
   "add-employee": "Xodim qo'shish",
   "select-employee-position": "Xodim lavozimini tanlang",
-  "select-employee-dargee": "Xodim ma'lumoti tanlang"
+  "select-employee-dargee": "Xodim ma'lumoti tanlang",
+  "employee-view": "Xodim haqida",
+  "reference": "Ma'lumotnoma",
+  "data-brith": "Tug'ilgan sana",
+  "place-of-birth": "Tug'ilgan joyi",
+  "uzbek": "O'zbek",
+  "partisanship": "Partiyaviyligi",
+  "information": "Ma'lumoti",
+  "completed-by": "Tamomlagan",
+  "non": "Kiritilmagan",
+  "nationality": "Millati",
+  "education-specialization": "Ma'lumoti bo'yicha mutaxassisligi",
+  "degree-info": "Ilmiy darajasi",
+  "scientific-title": "Ilmiy unvoni",
+  "add-admin": "Yangi Admin qo'shish"
   
 }

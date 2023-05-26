@@ -40,27 +40,14 @@ const PostCard = ({
       </div>
       <Link
         to={`/post/detail/${_id}`}
-        className=" text-zinc-700 dark:text-zinc-100 font-semibold text-lg hover:text-purple-600 transition_normal"
+        className=" text-zinc-700 dark:text-zinc-100 font-semibold hover:text-purple-600 transition_normal"
       >
         <p className="mb-2">{title}</p>
       </Link>
-      <p className="text-zinc-500 dark:text-zinc-300 mb-3">{excerpt.slice(0, 150)}...</p>
-      <div className="flex_betwen">
-        <Link to={`/post/detail/${_id}`}>
-          <Tooltip title="View">
-            <Button
-              variant="contained"
-              size="small"
-              color="info"
-              sx={{
-                marginRight: "10px",
-              }}
-              startIcon={<BsEye />}
-            >
-              {t("view")}
-            </Button>
-          </Tooltip>
-        </Link>
+      <p className="text-zinc-500 dark:text-zinc-300 mb-3 text-sm">
+        {excerpt.slice(0, 130)}...
+      </p>
+      <div className="flex justify-end">
         <Link to={`/post/detail/${_id}`}>
           <Tooltip title="Update Item">
             <Button

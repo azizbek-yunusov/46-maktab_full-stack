@@ -15,8 +15,8 @@ const getUserInfo = async (req, res) => {
 const updateProfile = async (req, res) => {
   try {
     const userData = {
-      name: req.body.name,
-      lastName: req.body.lastName,
+      first_name: req.body.first_name,
+      last_name: req.body.last_name,
       email: req.body.email,
       phoneNumber: req.body.phoneNumber,
     };
@@ -76,11 +76,15 @@ const uploadAvatar = async (req, res) => {
         url: newAvatar.secure_url,
       };
     }
-    const user = await AdminModel.findByIdAndUpdate(req.user.id, newUserAvatar, {
-      new: true,
-      runValidators: true,
-      useFindAndModify: false,
-    });
+    const user = await AdminModel.findByIdAndUpdate(
+      req.user.id,
+      newUserAvatar,
+      {
+        new: true,
+        runValidators: true,
+        useFindAndModify: false,
+      }
+    );
     res.status(200).json(user);
   } catch (err) {
     console.log(err);
@@ -112,9 +116,8 @@ const getUser = async (req, res) => {
 
 const createUser = async (req, res) => {
   try {
-    const { name, lastName, email, phoneNumber, password, avatar, admin } =
-      req.body;
-    if (!name || !email || !password || !avatar) {
+    const { first_name, last_name, email, password, avatar, admin } = req.body;
+    if (!first_name || !email || !password || !avatar) {
       return res.status(400).json({ error: "Please add all the feilds" });
     }
     const userExists = await AdminModel.findOne({ email });
@@ -127,9 +130,8 @@ const createUser = async (req, res) => {
       folder: "Avatar",
     });
     const user = await AdminModel.create({
-      name,
-      lastName,
-      phoneNumber,
+      first_name,
+      last_name,
       email,
       password: hashedPassword,
       avatar: {
@@ -148,8 +150,8 @@ const createUser = async (req, res) => {
 const updateUser = async (req, res) => {
   try {
     const userData = {
-      name: req.body.name,
-      lastName: req.body.lastName,
+      first_name: req.body.first_name,
+      last_name: req.body.last_name,
       email: req.body.email,
       phoneNumber: req.body.phoneNumber,
       admin: req.body.admin,

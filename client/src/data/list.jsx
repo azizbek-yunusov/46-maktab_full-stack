@@ -1,5 +1,9 @@
 export const menu = [
   {
+    name: "home",
+    path: "/",
+  },
+  {
     name: "about-me",
     path: "/about",
   },
@@ -12,18 +16,8 @@ export const menu = [
     path: "/about",
   },
   {
-    name: "posts",
-    path: "/post",
-    submenu: [
-      {
-        title: "Who we are",
-        url: "who-we-are",
-      },
-      {
-        title: "Our values",
-        url: "our-values",
-      },
-    ],
+    name: "news",
+    path: "/news",
   },
 ];
 

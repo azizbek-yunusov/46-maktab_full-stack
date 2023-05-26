@@ -21,7 +21,6 @@ const TableBody = ({
     "full-name",
     "date-of-brith",
     "class",
-    "sex",
     "district",
     "address",
     "actions",
@@ -98,11 +97,7 @@ const TableBody = ({
                     {item.classLetter}
                   </div>
                 </td>
-                <td className="">
-                  <div className="flex justify-start items-center">
-                    {t(item.gender)}
-                  </div>
-                </td>
+
                 <td className="">
                   <div className="flex justify-start items-center">
                     {item.district}
