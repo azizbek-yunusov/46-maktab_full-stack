@@ -1,7 +1,7 @@
 const api =
   process.env.NODE_ENV === "development"
     ? "/api"
-    : "https://xurmo-api.vercel.app/api";
+    : "https://46-maktab-api.vercel.app/api";
 export const authUrl = `${api}/auth/`;
 export const userUrl = `${api}/user/`;
 export const imageUrl = `${api}/image/`;
