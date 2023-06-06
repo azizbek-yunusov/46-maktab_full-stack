@@ -25,13 +25,8 @@ const About = () => {
           <h1 className="text-3xl font-semibold text-violet-900">
             {t("about")}
           </h1>
-          <p className="my-11 text-lg text-gray-800 leading-8 ml-9">
-            O‘zbekiston Respublikasi Oliy va o‘rta maxsus ta’lim vazirligi
-            Jizzax viloyat kasbiy ta’limni rivojlantirish va muvofiqlashtirish
-            hududiy boshqarmasi tasarrufidagi Dashtobod transport kasb-hunar
-            kolleji O‘zbekiston Respublikasi Prezidentining 2019 yil 6
-            sentyabrdagi PF-5812-son Farmoni bilan Zomin tuman 2-son kasb-hunar
-            maktabi sifatida tashkil etildi.
+          <p className="my-8 text-lg font-extralight text-gray-800 leading-8 ml-5">
+            {t("about-text")}
           </p>
           <div className="grid grid-cols-2 gap-4">
             {checks.map((item, index) => (

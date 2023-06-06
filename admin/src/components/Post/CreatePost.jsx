@@ -149,6 +149,9 @@ const CreatePost = () => {
                           onChange={(e) => setCategory(e.target.value)}
                         >
                           <MenuItem value="news">{t("news")}</MenuItem>
+                          <MenuItem value="elon">{t("elon")}</MenuItem>
+                          <MenuItem value="students">{t("students")}</MenuItem>
+                          <MenuItem value="teachers">{t("teachers")}</MenuItem>
                           <MenuItem value="about">{t("about")}</MenuItem>
                         </Select>
                       </FormControl>

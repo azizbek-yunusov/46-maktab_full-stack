@@ -7,7 +7,7 @@
   "teachers": "O'qituvchilarga",
   "posts": "Axborot xizmati",
   "news": "Yangiliklar",
-  "announcement": "E'lonlar",
+  "announcement": "E'lonlar va tadbirlar",
   "all-views": "BARCHA YANGILIKLAR",
   "search": "Kalit so'zini kiriting",
   "popular-post": "Eng ko‘p o‘qilganlar",
@@ -27,5 +27,12 @@
   "email": "Elektron pochtangizni kiriting",
   "murojat": "Sizngi murojaatingiz",
   "success": "Sizngi murojaatingiz muvaffaqiyatli yuborildi!",
-  "resources": "Foydali havolalar"
+  "resources": "Foydali havolalar",
+  "telefon": "Telefon",
+  "address": "Manzil",
+  "school": "Farg'ona viloyati, Bag'dod tumani 46 - sonli umumta'lim maktabi",
+
+  "documents": "Normativ hujjatlar",
+  "ramz": "Davlat ramzlari",
+  "about-text": "Farg'ona viloyati, Bag'dod tumani 46-sonli umumta'lim maktabi, o'quvchilarni sifatli ta'lim bilan ta'minlash, ma'naviy tarbiya berish va ijodiylikni rag'batlantirish asosida faoliyat yuritadigan bir o'quv muassasasi hisoblanadi. \n\n Maktabimizda yuqori malakali va malakali o'qituvchilar jamoasi faoliyat olib boradi, shuning bilan o'quvchilarni nazariy bilimlar bilan ta'minlaydi va amaliyotda ularni rivojlantiradi. O'quv jarayonida o'quvchilarning nutq, yozuv, hisoblash va boshqa o'quv qobiliyatlarini oshirishga katta e'tibor qaratiladi."
 }

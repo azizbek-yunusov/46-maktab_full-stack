@@ -231,13 +231,13 @@ const SignIn = () => {
                       )}
                     </Button>
                   </div>
-                  <div className="flex items-center justify-between md:mt-5 mt-3">
+                  {/* <div className="flex items-center justify-between md:mt-5 mt-3">
                     <div className="w-full h-[1px] bg-gray-300"></div>
                     <span className="text-sm mx-5 text-gray-400">
                       {t("or")}
                     </span>
                     <div className="w-full h-[1px] bg-gray-300"></div>
-                  </div>
+                  </div> */}
                 </form>
                 {/* <button
                   onClick={() => googleOAuthHandle()}

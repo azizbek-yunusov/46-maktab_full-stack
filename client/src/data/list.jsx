@@ -1,3 +1,6 @@
+import { BsEnvelope, BsTelephone } from "react-icons/bs";
+import { HiOutlineHome } from "react-icons/hi";
+
 export const menu = [
   {
     name: "home",
@@ -8,16 +11,24 @@ export const menu = [
     path: "/about",
   },
   {
-    name: "teachers",
-    path: "/about",
-  },
-  {
     name: "students",
     path: "/about",
   },
   {
     name: "news",
     path: "/news",
+  },
+  {
+    name: "documents",
+    path: "/documents",
+  },
+  {
+    name: "ramz",
+    path: "/ramz",
+  },
+  {
+    name: "address",
+    path: "/contact",
   },
 ];
 
@@ -79,5 +90,28 @@ export const urls = [
   {
     img: "https://qitu.uz/storage/partners/March2023/bnlTTN2sJbELdL22dgiM.png",
     href: "https://www.gov.uz",
+  },
+];
+
+export const contacts = [
+  {
+    title: "telefon",
+    text: "+998 (94) 554 55 94",
+    href: "+998945545594",
+    icon: <BsTelephone className="text-3xl text-violet-600" />
+  },
+  {
+    title: "Email",
+    text: "46maktab@gmail.com",
+    href: "46maktab@gmail.com",
+    icon: <BsEnvelope className="text-3xl text-violet-600" />
+
+  },
+  {
+    title: "manzil",
+    text: "Bagdod tum., Yoshlik k., 72/12 uy",
+    href: "/",
+    icon: <HiOutlineHome className="text-[34px] text-violet-600" />
+
   },
 ];

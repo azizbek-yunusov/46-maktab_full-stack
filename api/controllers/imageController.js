@@ -3,8 +3,22 @@ const cloudinary = require("../utils/cloudinary");
 
 const getAllImages = async (req, res) => {
   try {
-    const images = await ImageModel.find();
-    res.status(201).json({ msg: "Success", images });
+    const perPage = 8; // Sahifadagi postlar soni
+    const currentPage = req.query.page || 1; // Joriy sahifa
+    let totalPosts;
+    totalPosts = await ImageModel.countDocuments({});
+    const totalPages = Math.ceil(totalPosts / perPage);
+
+    const images = await ImageModel.find({})
+      .sort({ createdAt: -1 })
+      .skip(perPage * currentPage - perPage)
+      .limit(perPage);
+
+    res.status(201).json({
+      images,
+      totalPages,
+      currentPage,
+    });
   } catch (err) {
     console.log(err);
   }

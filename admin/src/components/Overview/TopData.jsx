@@ -20,7 +20,7 @@ const TopData = () => {
             {t("employees")}
           </p>
           <p className="text-xl xl:text-2xl font-semibold font-mono mr-2 text-gray-700 dark:text-gray-200">
-            {/* {orders.length}  */} 5455
+            {/* {orders.length}  */} 120
           </p>
         </div>
       </div>
@@ -33,7 +33,7 @@ const TopData = () => {
             {t("students")}
           </p>
           <p className="text-xl xl:text-2xl font-semibold font-mono mr-2 text-gray-700 dark:text-gray-200">
-            {/* {users.length} */} 1000
+            {/* {users.length} */} 1300
           </p>
         </div>
       </div>
@@ -60,7 +60,7 @@ const TopData = () => {
             {t("sciences")}
           </p>
           <p className="text-xl xl:text-2xl font-semibold font-mono mr-2 text-gray-700 dark:text-gray-200 ">
-            {/* {products.length} */} 155
+            {/* {products.length} */} 15
             {/* <CountUp d.01} end={products.length} /> */}
           </p>
         </div>

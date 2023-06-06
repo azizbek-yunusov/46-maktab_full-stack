@@ -6,7 +6,7 @@ const BannerItem = ({ name, image, href }) => {
       <img
         src={image.url}
         alt={name}
-        className="w-full bg-center object-cover h-[500px] rounded-xl select-none bg-gray-200"
+        className="w-full bg-center object-cover h-[500px] rounded-bdd-xl select-none bg-gray-200"
       />
     </div>
   );

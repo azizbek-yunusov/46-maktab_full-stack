@@ -141,7 +141,7 @@ const UploadImage = () => {
                           <img
                             src={image}
                             alt="images"
-                            className="object-cover h-64 p-2 w-full"
+                            className="object-cover p-2 w-full"
                           />
                         </div>
                         <IoMdClose

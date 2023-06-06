@@ -12,12 +12,12 @@ const BannerCarousel = () => {
   const { isLoading, images } = useSelector((state) => state.image);
   return (
     <section>
-      <div className="container-full">
+      <div className="-full">
         <Swiper
           style={{
             "--swiper-navigation-size": "28px",
           }}
-          className="rounded-xl"
+          className="rounded-b-xl"
           modules={[Autoplay, Pagination, Navigation]}
           autoplay={{
             delay: 2500,

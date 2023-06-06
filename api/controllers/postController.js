@@ -1,4 +1,5 @@
 const PostModel = require("../models/PostModel");
+const ApiFeatures = require("../utils/apiFeatures");
 const cloudinary = require("../utils/cloudinary");
 
 const createPost = async (req, res) => {
@@ -29,11 +30,22 @@ const createPost = async (req, res) => {
 
 const getPosts = async (req, res) => {
   try {
-    const posts = await PostModel.find().populate(
-      "createdBy",
-      "_id name lastName avatar email"
-    );
-    res.status(201).json(posts);
+    const perPage = 8; // Sahifadagi postlar soni
+    const currentPage = req.query.page || 1; // Joriy sahifa
+    let totalPosts;
+    totalPosts = await PostModel.countDocuments({});
+    const totalPages = Math.ceil(totalPosts / perPage);
+
+    const posts = await PostModel.find({})
+      .sort({ createdAt: -1 })
+      .skip(perPage * currentPage - perPage)
+      .limit(perPage);
+
+    res.status(201).json({
+      posts,
+      totalPages,
+      currentPage,
+    });
   } catch (err) {
     console.log(err);
   }

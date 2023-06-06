@@ -10,33 +10,28 @@ const TopBar = () => {
   let { t } = useTranslation(["home"]);
   return (
     <div className="bg-violet-500">
-      <div className="container-full py-2 text-white">
-        <div className="flex_betwen">
+      <div className="container-full py-2 text-white flex_betwen">
+        <Translate />
+        <div className="flex justify-end">
+          <a
+            href="https://kundalik.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mx-2 hover:text-blue-400"
+          >
+            www.kundalik.com
+          </a>
+          <span>|</span>
           <div className="flex_center">
-            <div className="flex_center mr-5">
-              <ImLocation className="text-xl" />
-              <p className="ml-1">{t("school-address")}</p>
-            </div>
-            <a href="tel:" className="flex_center">
-              <BsFillTelephoneFill className="text-xl" />
-              <p className="ml-1">+998 94 544 55 94</p>
-            </a>
-          </div>
-          <div className="flex_center">
-            <div className="flex_center mr-3">
-              <MdEmail className="text-xl mr-1" />
-              <p>46-maktab@gmail.com</p>
-            </div>
             <ul className="flex mr-8">
               {socials.map((item, index) => (
-                <li key={index} className="mx-2 text-xl">
+                <li key={index} className="mx-3 text-2xl">
                   <a href={item.href} target="_blank" rel="noopener noreferrer">
                     {item.icon}
                   </a>
                 </li>
               ))}
             </ul>
-            <Translate />
           </div>
         </div>
       </div>

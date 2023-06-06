@@ -19,7 +19,7 @@ const HomeNews = () => {
       <div className="container-full grid grid-cols-12 gap-x-5 py-5">
         <div className="col-span-8">
           <h1 className="text-3xl font-semibold text-blue-900">{t("news")}</h1>
-          <div className="grid grid-cols-3 gap-4 my-8">
+          <div className="grid grid-cols-3 xl:gap-4 gap-1 my-8">
             {posts.length
               ? posts.map((item, index) => <BlogCard key={index} {...item} />)
               : null}
@@ -39,7 +39,7 @@ const HomeNews = () => {
           </h1>
           <div className="flex_col my-5">
             {posts.length
-              ? posts.map((item, index) => <ElonCard key={index} {...item} />)
+              ? posts.slice(0, 5).map((item, index) => <ElonCard key={index} {...item} />)
               : null}
           </div>
         </div>

@@ -6,7 +6,7 @@ import { socials } from "../../data/socials";
 const Footer = () => {
   const { t } = useTranslation(["home"]);
   return (
-    <footer className="relative z-10 bg-white pt-20">
+    <footer className="relative z-10 bg-white pt-20 border-t border-t-gray-300">
       <div className="container-full">
         <div className="-mx-4 flex justify-between">
           <div className="w-full sm:w-2/3 lg:w-1/3">
@@ -17,7 +17,7 @@ const Footer = () => {
                   <a
                     key={index}
                     href={`${item.href}`}
-                    className="rounded-md bg-purple-700 p-2 text-2xl mx-2 text-white"
+                    className="rounded-md bg-gray-500 p-2 text-2xl mx-2 text-white"
                   >
                     {item.icon}
                   </a>
